@@ -26,10 +26,5 @@ exports.drawChars = function(chars, x, y) {
 };
 
 exports.drawCharsFromCell = function(chars, cx, cy) {
-    var x = cx * 8;
-    var y = (cy * 14) + 8;
-
-    for (var i = 0; i < chars.length; i++) {
-        g.drawImage(charset[chars[i]], x + (i * 8), y);
-    }
+    exports.drawChars(chars, cx * 8, (cy * 14) + 8);
 };
