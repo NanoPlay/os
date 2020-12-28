@@ -11,7 +11,9 @@ exports.start = function() {
     require("display").clear();
 
     g.drawImage(require("images").logo, 34, 13);
-    
-    require("display").drawCharsFromCell("0123456789", 0, 3);
+
+    require("display").drawCharsFromCell("Hello, world!", 1, 3);
     require("display").render();
+
+    NRF.nfcURL("https://subnodal.com");
 };
