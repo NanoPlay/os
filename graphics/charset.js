@@ -1095,6 +1095,176 @@ exports["!"] = Graphics.createImage(`
         
 `);
 
+exports["?"] = Graphics.createImage(`
+        
+        
+        
+        
+  ###   
+ #   #  
+     #  
+    #   
+   #    
+        
+   #    
+        
+        
+        
+`);
+
+exports["\""] = Graphics.createImage(`
+        
+        
+        
+        
+  # #   
+  # #   
+        
+        
+        
+        
+        
+        
+        
+        
+`);
+
+exports["#"] = Graphics.createImage(`
+        
+        
+        
+        
+  #  #  
+ ###### 
+  #  #  
+  #  #  
+ ###### 
+  #  #  
+  #  #  
+        
+        
+        
+`);
+
+exports["%"] = Graphics.createImage(`
+        
+        
+        
+        
+ ##  #  
+ ##  #  
+    #   
+   #    
+  #     
+ #  ##  
+ #  ##  
+        
+        
+        
+`);
+
+exports["&"] = Graphics.createImage(`
+        
+        
+        
+        
+  ###   
+ #   #  
+ #   #  
+  ###   
+ #  # # 
+ #   #  
+  ### # 
+        
+        
+        
+`);
+
+exports["'"] = Graphics.createImage(`
+        
+        
+        
+        
+  #     
+  #     
+        
+        
+        
+        
+        
+        
+        
+        
+`);
+
+exports["("] = Graphics.createImage(`
+        
+        
+        
+        
+    ##  
+   #    
+   #    
+   #    
+   #    
+   #    
+    ##  
+        
+        
+        
+`);
+
+exports[")"] = Graphics.createImage(`
+        
+        
+        
+        
+  ##    
+    #   
+    #   
+    #   
+    #   
+    #   
+  ##    
+        
+        
+        
+`);
+
+exports["*"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+   #    
+ # # #  
+  ###   
+ # # #  
+   #    
+        
+        
+        
+        
+`);
+
+exports["+"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+   #    
+   #    
+ #####  
+   #    
+   #    
+        
+        
+        
+        
+`);
+
 exports[","] = Graphics.createImage(`
         
         
@@ -1112,6 +1282,23 @@ exports[","] = Graphics.createImage(`
         
 `);
 
+exports["-"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+        
+        
+ #####  
+        
+        
+        
+        
+        
+        
+`);
+
 exports["."] = Graphics.createImage(`
         
         
@@ -1124,6 +1311,329 @@ exports["."] = Graphics.createImage(`
         
    ##   
    ##   
+        
+        
+        
+`);
+
+exports["/"] = Graphics.createImage(`
+        
+        
+        
+        
+     #  
+     #  
+    #   
+   #    
+  #     
+ #      
+ #      
+        
+        
+        
+`);
+
+exports[":"] = Graphics.createImage(`
+        
+        
+        
+        
+   ##   
+   ##   
+        
+        
+        
+   ##   
+   ##   
+        
+        
+        
+`);
+
+exports[";"] = Graphics.createImage(`
+        
+        
+        
+        
+   ##   
+   ##   
+        
+        
+        
+   ##   
+   ##   
+    #   
+   #    
+        
+`);
+
+exports["<"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+    ##  
+  ##    
+ #      
+  ##    
+    ##  
+        
+        
+        
+        
+`);
+
+exports["="] = Graphics.createImage(`
+        
+        
+        
+        
+        
+        
+ #####  
+        
+        
+ #####  
+        
+        
+        
+        
+`);
+
+exports[">"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+ ##     
+   ##   
+     #  
+   ##   
+ ##     
+        
+        
+        
+        
+`);
+
+exports["@"] = Graphics.createImage(`
+        
+        
+        
+        
+  ###   
+ #   #  
+ # ###  
+ # # #  
+ # ###  
+ #      
+  ####  
+        
+        
+        
+`);
+
+exports["["] = Graphics.createImage(`
+        
+        
+        
+        
+   ###  
+   #    
+   #    
+   #    
+   #    
+   #    
+   ###  
+        
+        
+        
+`);
+
+exports["]"] = Graphics.createImage(`
+        
+        
+        
+        
+  ###   
+    #   
+    #   
+    #   
+    #   
+    #   
+  ###   
+        
+        
+        
+`);
+
+exports["\\"] = Graphics.createImage(`
+        
+        
+        
+        
+ #      
+ #      
+  #     
+   #    
+    #   
+     #  
+     #  
+        
+        
+        
+`);
+
+exports["^"] = Graphics.createImage(`
+        
+        
+        
+        
+   #    
+  # #   
+ #   #  
+        
+        
+        
+        
+        
+        
+        
+`);
+
+exports["_"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+ #####  
+        
+        
+        
+`);
+
+exports["`"] = Graphics.createImage(`
+        
+        
+        
+        
+  #     
+   #    
+        
+        
+        
+        
+        
+        
+        
+        
+`);
+
+exports["{"] = Graphics.createImage(`
+        
+        
+        
+        
+     #  
+    #   
+    #   
+   #    
+    #   
+    #   
+     #  
+        
+        
+        
+`);
+
+exports["}"] = Graphics.createImage(`
+        
+        
+        
+        
+  #     
+   #    
+   #    
+    #   
+   #    
+   #    
+  #     
+        
+        
+        
+`);
+
+exports["|"] = Graphics.createImage(`
+        
+        
+        
+        
+   #    
+   #    
+   #    
+   #    
+   #    
+   #    
+   #    
+        
+        
+        
+`);
+
+exports["~"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+  ## #  
+ #  #   
+        
+        
+        
+        
+        
+        
+        
+`);
+
+exports["multiply"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+ #   #  
+  # #   
+   #    
+  # #   
+ #   #  
+        
+        
+        
+        
+`);
+
+exports["divide"] = Graphics.createImage(`
+        
+        
+        
+        
+        
+   #    
+        
+ #####  
+        
+   #    
+        
         
         
         
