@@ -8,6 +8,7 @@
 */
 
 var charset = require("charset");
+var minichar = require("minichar");
 
 exports.graphicsModule = new Graphics();
 
@@ -27,4 +28,10 @@ exports.drawChars = function(chars, x, y) {
 
 exports.drawCharsFromCell = function(chars, cx, cy) {
     exports.drawChars(chars, cx * 8, (cy * 14) + 8);
+};
+
+exports.drawCharsMini = function(chars, x, y) {
+    for (var i = 0; i < chars.length; i++) {
+        g.drawImage(minichar[chars[i]], x + (i * 4), y);
+    }
 };
