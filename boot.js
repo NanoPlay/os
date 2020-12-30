@@ -7,7 +7,12 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-Bluetooth.setConsole(1);
-
 require("Storage").write(".splash", "");
-require("main").start();
+
+if (!BTN2.read()) {
+    require("main").start();
+} else {
+    g.clear();
+    g.drawString("Boot cancelled. Please repower device.", 0, 0);
+    g.flip();
+}

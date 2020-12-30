@@ -148,7 +148,15 @@ exports.drawStatusBar = function() {
 
     require("display").drawCharsMini(require("l10n").formatDate("%g", new Date()), 1, 1);
 
+    g.drawImage(require("images").batteryStatus[Math.floor(E.getBattery() / 12.5)], 116, 1);
     g.drawLine(0, 7, 127, 7);
+};
+
+exports.drawButtonIcons = function(tl, tr, bl, br) {
+    require("display").drawCharsFromCell([tl], 0, 0);
+    require("display").drawCharsFromCell([tr], 15, 0);
+    require("display").drawCharsFromCell([bl], 0, 3);
+    require("display").drawCharsFromCell([br], 15, 3);
 };
 
 exports.openRootScreen = function(screen) {
@@ -157,10 +165,16 @@ exports.openRootScreen = function(screen) {
     screen.start();
 
     var loop = setInterval(function() {
-        if (!screen.next()) {
-            clearInterval(loop);
+        try {
+            if (!screen.next()) {
+                clearInterval(loop);
 
-            closeCallback();
+                closeCallback();
+            }
+        } catch (e) {
+            print(e);
+
+            clearInterval(loop);
         }
     }, require("config").properties.runSpeed);
 

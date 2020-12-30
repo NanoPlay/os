@@ -45,3 +45,77 @@ exports.logo = Graphics.createImage(`
 ####             ###########    ####    ####        ####    
 ####              ##########    ####    ####        ####    
 `);
+
+exports.batteryStatus = [];
+
+exports.batteryStatus[0] = Graphics.createImage(`
+##########
+#  # #   ##
+#   #    ##
+#  # #   ##
+##########
+`);
+
+exports.batteryStatus[1] = Graphics.createImage(`
+##########
+##       ##
+##       ##
+##       ##
+##########
+`);
+
+exports.batteryStatus[2] = Graphics.createImage(`
+##########
+###      ##
+###      ##
+###      ##
+##########
+`);
+
+exports.batteryStatus[3] = Graphics.createImage(`
+##########
+####     ##
+####     ##
+####     ##
+##########
+`);
+
+exports.batteryStatus[4] = Graphics.createImage(`
+##########
+#####    ##
+#####    ##
+#####    ##
+##########
+`);
+
+exports.batteryStatus[5] = Graphics.createImage(`
+##########
+######   ##
+######   ##
+######   ##
+##########
+`);
+
+exports.batteryStatus[6] = Graphics.createImage(`
+##########
+#######  ##
+#######  ##
+#######  ##
+##########
+`);
+
+exports.batteryStatus[7] = Graphics.createImage(`
+##########
+######## ##
+######## ##
+######## ##
+##########
+`);
+
+exports.batteryStatus[8] = Graphics.createImage(`
+##########
+###########
+###########
+###########
+##########
+`);

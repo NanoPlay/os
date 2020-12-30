@@ -10,10 +10,6 @@
 var uiScreen = require("ui").Screen;
 
 class MainScreen extends uiScreen {
-    constructor() {
-        super();
-    }
-    
     tick(event) {
         g.drawImage(require("images").logo, 34, 13);
 
@@ -24,6 +20,8 @@ class MainScreen extends uiScreen {
         } else {
             require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
         }
+
+        require("ui").drawButtonIcons("back", "ok", "left", "right");
     }
 }
 
