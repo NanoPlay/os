@@ -7,20 +7,22 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
+var uiScreen = require("ui").Screen;
+
+class MainScreen extends uiScreen {
+    constructor() {
+        super();
+    }
+    
+    tick() {
+        g.drawImage(require("images").logo, 34, 13);
+
+        require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
+    }
+}
+
 exports.start = function() {
-    require("display").clear();
-
-    g.drawImage(require("images").logo, 34, 13);
-
-    require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
-    require("ui").drawStatusBar();
-
-    require("display").render();
-
     NRF.nfcURL("https://subnodal.com");
 
-    setInterval(function() {
-        require("ui").drawStatusBar();
-        require("display").render();
-    }, 1000);
+    require("ui").openRootScreen(new MainScreen());
 };
