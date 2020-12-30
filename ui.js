@@ -36,11 +36,11 @@ exports.Button = class {
             thisScope.isPressed = false;
 
             if (event.time - event.lastTime > require("config").properties.longPressTime) {
-                this.lastStatus = exports.buttonStatus.LONG_PRESSED;
+                thisScope.lastStatus = exports.buttonStatus.LONG_PRESSED;
             } else {
-                this.lastStatus = exports.buttonStatus.PRESSED;
+                thisScope.lastStatus = exports.buttonStatus.PRESSED;
             }
-        }, input, {edge: "falling"}));
+        }, input, {edge: "falling", repeat: true}));
     }
 
     poll() {
@@ -60,6 +60,9 @@ exports.Button = class {
 
 exports.Screen = class {
     constructor() {
+        this._lastButtonStateSerial = null;
+        this._lastRefreshed = -1000;
+
         this.buttons = {
             tl: new exports.Button(BTN1),
             tr: new exports.Button(BTN2),
@@ -71,7 +74,19 @@ exports.Screen = class {
         this.alwaysClear = true;
         this.isOpen = true;
         this.openedScreen = null;
+        this.idleRefreshInterval = 1000;
     }
+
+    get _buttonStateSerial() {
+        return (
+            (this.buttons.tl.lastStatus << 0) +
+            (this.buttons.tr.lastStatus << 2) +
+            (this.buttons.bl.lastStatus << 4) +
+            (this.buttons.br.lastStatus << 6)
+        );
+    }
+
+    start() {}
 
     tick() {}
 
@@ -81,12 +96,21 @@ exports.Screen = class {
                 this.openedScreen = null;
             }
 
-            return;
+            return this.isOpen;
+        }
+
+        if (
+            this._buttonStateSerial == this._lastButtonStateSerial &&
+            new Date().getTime() - this._lastRefreshed < Math.min(this.idleRefreshInterval, 1000)
+        ) {
+            return this.isOpen;
         }
 
         if (this.alwaysClear) {
             require("display").clear();
         }
+
+        this._lastButtonStateSerial = this._buttonStateSerial;
 
         this.tick({
             buttons: {
@@ -103,11 +127,15 @@ exports.Screen = class {
 
         require("display").render();
 
+        this._lastRefreshed = new Date().getTime();
+
         return this.isOpen;
     }
 
     open(screen) {
         this.openedScreen = screen;
+
+        this.openedScreen.start();
     }
 
     close() {
@@ -125,6 +153,8 @@ exports.drawStatusBar = function() {
 
 exports.openRootScreen = function(screen) {
     var closeCallback = arguments[1] || function() {};
+
+    screen.start();
 
     var loop = setInterval(function() {
         if (!screen.next()) {

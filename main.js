@@ -14,10 +14,16 @@ class MainScreen extends uiScreen {
         super();
     }
     
-    tick() {
+    tick(event) {
         g.drawImage(require("images").logo, 34, 13);
 
-        require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
+        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+            require("display").drawCharsFromCell("Press!", 1, 3);
+        } else if (event.buttons.tl == require("ui").buttonStatus.LONG_PRESSED) {
+            require("display").drawCharsFromCell("Long press!", 1, 3);
+        } else {
+            require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
+        }
     }
 }
 
