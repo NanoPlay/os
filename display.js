@@ -21,6 +21,16 @@ exports.render = function() {
 };
 
 exports.drawChars = function(chars, x, y) {
+    var invert = arguments[3] || false;
+
+    if (invert) {
+        g.setBgColor(1);
+        g.setColor(0);
+    } else {
+        g.setBgColor(0);
+        g.setColor(1);
+    }
+
     for (var i = 0; i < chars.length; i++) {
         if (charset[chars[i]] != undefined) {
             g.drawImage(charset[chars[i]], x + (i * 8), y);
@@ -28,15 +38,43 @@ exports.drawChars = function(chars, x, y) {
             g.drawString(chars[i], x + (i * 8) + 1, y + 4);
         }
     }
+
+    g.setBgColor(0);
+    g.setColor(1);
 };
 
 exports.drawCharsFromCell = function(chars, cx, cy) {
-    exports.drawChars(chars, cx * 8, (cy * 14) + 8);
+    var invert = arguments[3] || false;
+
+    exports.drawChars(chars, cx * 8, (cy * 14) + 8, invert);
 };
 
 exports.drawCharsMini = function(chars, x, y) {
+    var invert = arguments[3] || false;
+
+    if (invert) {
+        g.setBgColor(1);
+        g.setColor(0);
+    } else {
+        g.setBgColor(0);
+        g.setColor(1);
+    }
+
     for (var i = 0; i < chars.length; i++) {
         g.drawImage(minichar[chars[i]], x + (i * 4), y);
+    }
+
+    g.setBgColor(0);
+    g.setColor(1);
+};
+
+exports.fillCells = function(cx, cy, cw, ch) {
+    var invert = arguments[4] || false;
+
+    if (invert) {
+        g.fillRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 8);
+    } else {
+        g.clearRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 8);
     }
 };
 

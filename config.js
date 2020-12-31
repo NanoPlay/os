@@ -10,7 +10,7 @@
 exports.properties = {
     language: "en_GB",
     longPressTime: 1,
-    runSpeed: 20
+    runSpeed: 0
 };
 
 exports.save = function() {

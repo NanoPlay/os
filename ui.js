@@ -53,7 +53,11 @@ exports.Button = class {
 
     stopWatching() {
         for (var i = 0; i < this._watches.length; i++) {
-            clearWatch(this._watches[i]);
+            if (this._watches[i] != undefined) {
+                clearWatch(this._watches[i]);
+
+                this._watches[i] = undefined;
+            }
         }
     }
 };
@@ -62,13 +66,6 @@ exports.Screen = class {
     constructor() {
         this._lastButtonStateSerial = null;
         this._lastRefreshed = -1000;
-
-        this.buttons = {
-            tl: new exports.Button(BTN1),
-            tr: new exports.Button(BTN2),
-            bl: new exports.Button(BTN4),
-            br: new exports.Button(BTN3)
-        };
 
         this.showStatusBar = true;
         this.alwaysClear = true;
@@ -79,10 +76,10 @@ exports.Screen = class {
 
     get _buttonStateSerial() {
         return (
-            (this.buttons.tl.lastStatus << 0) +
-            (this.buttons.tr.lastStatus << 2) +
-            (this.buttons.bl.lastStatus << 4) +
-            (this.buttons.br.lastStatus << 6)
+            (exports.buttons.tl.lastStatus << 0) +
+            (exports.buttons.tr.lastStatus << 2) +
+            (exports.buttons.bl.lastStatus << 4) +
+            (exports.buttons.br.lastStatus << 6)
         );
     }
 
@@ -114,10 +111,10 @@ exports.Screen = class {
 
         this.tick({
             buttons: {
-                tl: this.buttons.tl.poll(),
-                tr: this.buttons.tr.poll(),
-                bl: this.buttons.bl.poll(),
-                br: this.buttons.br.poll()
+                tl: exports.buttons.tl.poll(),
+                tr: exports.buttons.tr.poll(),
+                bl: exports.buttons.bl.poll(),
+                br: exports.buttons.br.poll()
             }
         });
 
@@ -140,6 +137,84 @@ exports.Screen = class {
 
     close() {
         this.isOpen = false;
+    }
+};
+
+var screenClass = exports.Screen;
+
+exports.MenuScreen = class extends screenClass {
+    constructor(menuItems) {
+        super();
+
+        this.menuItems = menuItems;
+        
+        this.selectedItem = 0;
+        this.scrollPosition = 0;
+    }
+
+    start() {
+        this.selectedItem = 0;
+        this.scrollPosition = 0;
+    }
+
+    tick(event) {
+        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+            this.close();
+        }
+
+        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+            if (this.menuItems[this.selectedItem].action != undefined) {
+                this.menuItems[this.selectedItem].action();
+            }
+        }
+
+        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+            this.selectedItem--;
+
+            if (this.selectedItem < 0) {
+                this.selectedItem = this.menuItems.length - 1;
+            }
+        } else if (event.buttons.bl == require("ui").buttonStatus.LONG_PRESSED) {
+            this.selectedItem = 0;
+        }
+
+        if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+            this.selectedItem++;
+
+            if (this.selectedItem >= this.menuItems.length) {
+                this.selectedItem = 0;
+            }
+        } else if (event.buttons.br == require("ui").buttonStatus.LONG_PRESSED) {
+            this.selectedItem = this.menuItems.length - 1;
+        }
+
+        while (this.selectedItem - this.scrollPosition < 0) {
+            this.scrollPosition--;
+        }
+
+        while (this.selectedItem - this.scrollPosition > 3) {
+            this.scrollPosition++;
+        }
+
+        for (var i = 0; i < 4; i++) {
+            if (this.scrollPosition + i < this.menuItems.length) {
+                if (this.selectedItem == this.scrollPosition + i) {
+                    require("display").fillCells(1, i, 14, 1, true);
+                }
+                
+                var textToShow = this.menuItems[this.scrollPosition + i].text;
+
+                if (textToShow.length > 14) {
+                    textToShow = this.menuItems[this.scrollPosition + i].text.substring(0, 13).split("");
+                    
+                    textToShow.push("ellipsis");
+                }
+
+                require("display").drawCharsFromCell(textToShow, 1, i, this.selectedItem == this.scrollPosition + i);
+            }
+        }
+
+        require("ui").drawButtonIcons("back", "ok", "up", "down");
     }
 };
 
@@ -172,9 +247,9 @@ exports.openRootScreen = function(screen) {
                 closeCallback();
             }
         } catch (e) {
-            print(e);
-
             clearInterval(loop);
+
+            throw e;
         }
     }, require("config").properties.runSpeed);
 
@@ -183,4 +258,11 @@ exports.openRootScreen = function(screen) {
 
 exports.closeRootScreen = function(loop) {
     clearInterval(loop);
+};
+
+exports.buttons = {
+    tl: new exports.Button(BTN1),
+    tr: new exports.Button(BTN2),
+    bl: new exports.Button(BTN4),
+    br: new exports.Button(BTN3)
 };
