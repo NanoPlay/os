@@ -72,9 +72,9 @@ exports.fillCells = function(cx, cy, cw, ch) {
     var invert = arguments[4] || false;
 
     if (invert) {
-        g.fillRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 8);
+        g.fillRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 7);
     } else {
-        g.clearRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 8);
+        g.clearRect(cx * 8, (cy * 14) + 8, ((cx + cw) * 8) - 1, ((cy + ch) * 14) + 7);
     }
 };
 
