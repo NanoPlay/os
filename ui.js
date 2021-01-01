@@ -18,9 +18,17 @@ exports.Button = class {
         this._watches = [];
 
         this.isPressed = false;
-        this.lastStatus = exports.buttonStatus.UNPRESSED;
+        this.statusBuffer = [];
 
         this.startWatching(input);
+    }
+
+    get lastStatus() {
+        if (this.statusBuffer.length > 0) {
+            return this.statusBuffer[this.statusBuffer.length - 1];
+        } else {
+            return exports.buttonStatus.UNPRESSED;
+        }
     }
 
     startWatching(input) {
@@ -36,19 +44,24 @@ exports.Button = class {
             thisScope.isPressed = false;
 
             if (event.time - event.lastTime > require("config").properties.longPressTime) {
-                thisScope.lastStatus = exports.buttonStatus.LONG_PRESSED;
+                thisScope.statusBuffer.push(exports.buttonStatus.LONG_PRESSED);
             } else {
-                thisScope.lastStatus = exports.buttonStatus.PRESSED;
+                thisScope.statusBuffer.push(exports.buttonStatus.PRESSED);
+            }
+
+            // Prevent buffer from becoming too full where the user has to wait for all events to finish
+            if (thisScope.statusBuffer.length > 5) {
+                thisScope.statusBuffer = [thisScope.statusBuffer.pop()];
             }
         }, input, {edge: "falling", repeat: true}));
     }
 
     poll() {
-        var status = this.lastStatus;
-
-        this.lastStatus = exports.buttonStatus.UNPRESSED;
-
-        return status;
+        if (this.statusBuffer.length > 0) {
+            return this.statusBuffer.pop();
+        } else {
+            return exports.buttonStatus.UNPRESSED;
+        }
     }
 
     stopWatching() {
@@ -170,22 +183,24 @@ exports.MenuScreen = class extends screenClass {
 
         if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
             this.selectedItem--;
-
-            if (this.selectedItem < 0) {
-                this.selectedItem = this.menuItems.length - 1;
-            }
         } else if (event.buttons.bl == require("ui").buttonStatus.LONG_PRESSED) {
-            this.selectedItem = 0;
+            this.selectedItem -= 4;
+            this.scrollPosition -= 4;
+        }
+
+        if (this.selectedItem < 0) {
+            this.selectedItem = this.menuItems.length - 1;
         }
 
         if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
             this.selectedItem++;
-
-            if (this.selectedItem >= this.menuItems.length) {
-                this.selectedItem = 0;
-            }
         } else if (event.buttons.br == require("ui").buttonStatus.LONG_PRESSED) {
-            this.selectedItem = this.menuItems.length - 1;
+            this.selectedItem += 4;
+            this.scrollPosition += 4;
+        }
+
+        if (this.selectedItem >= this.menuItems.length) {
+            this.selectedItem = 0;
         }
 
         while (this.selectedItem - this.scrollPosition < 0) {
