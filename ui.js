@@ -101,14 +101,6 @@ exports.Screen = class {
     tick() {}
 
     next() {
-        // if (this.openedScreen != null) {
-        //     if (!this.openedScreen.next()) {
-        //         this.openedScreen = null;
-        //     }
-
-        //     return this.isOpen;
-        // }
-
         if (
             this._buttonStateSerial == this._lastButtonStateSerial &&
             new Date().getTime() - this._lastRefreshed < Math.max(this.idleRefreshInterval, 1000)
@@ -159,6 +151,7 @@ exports.MenuScreen = class extends screenClass {
     constructor(menuItems) {
         super();
 
+        this.showStatusBar = false;
         this.idleRefreshInterval = 3000;
 
         this.menuItems = menuItems;
@@ -232,6 +225,11 @@ exports.MenuScreen = class extends screenClass {
         }
 
         require("ui").drawButtonIcons("back", "ok", "up", "down");
+
+        require("ui").drawStatusBar({
+            pageUp: this.scrollPosition,
+            pageDown: this.scrollPosition + 4 < this.menuItems.length
+        });
     }
 };
 
