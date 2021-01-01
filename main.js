@@ -11,6 +11,8 @@ var uiScreen = require("ui").Screen;
 var uiMenuScreen = require("ui").MenuScreen;
 var uiHomeScreen = require("home").HomeScreen;
 
+var rootScreenIsOpen = false;
+
 class MainScreen extends uiScreen {
     tick(event) {
         g.drawImage(require("images").logo, 34, 13);
@@ -29,46 +31,74 @@ class MainScreen extends uiScreen {
     }
 }
 
+function startRootScreen() {
+    if (!rootScreenIsOpen) {
+        rootScreenIsOpen = true;
+
+        var homeScreen = new uiHomeScreen([
+            {
+                text: "Clock",
+                icon: require("images").clockIcon
+            },
+            {
+                text: "Compute",
+                icon: require("images").computeIcons[require("l10n").getLocaleCode()]
+            },
+            {
+                text: "Programming",
+                icon: require("images").programmingIcon
+            },
+            {
+                text: "Settings",
+                icon: require("images").settingsIcon,
+                action: function() {
+                    var menu = new uiMenuScreen([
+                        {
+                            text: "Test screen",
+                            action: function() {
+                                menu.open(new MainScreen());
+                            }
+                        },
+                        {text: "Hello"},
+                        {text: "World"},
+                        {text: "Testing"},
+                        {text: "Test 2"},
+                        {text: "Test 3"},
+                        {text: "Test 4"},
+                        {text: "Really long string that goes on for miles"}
+                    ]);
+        
+                    homeScreen.open(menu);
+                }
+            }
+        ]);
+
+        require("ui").buttons.tl.statusBuffer = [];
+        require("ui").buttons.tr.statusBuffer = [];
+        require("ui").buttons.bl.statusBuffer = [];
+        require("ui").buttons.br.statusBuffer = [];
+
+        LED.write(1);
+
+        require("ui").openRootScreen(homeScreen, function() {
+            rootScreenIsOpen = false;
+
+            require("display").clear();
+            require("display").render();
+
+            LED.write(0);
+        });
+    }
+}
+
 exports.start = function() {
     NRF.nfcURL("https://subnodal.com");
 
-    var homeScreen = new uiHomeScreen([
-        {
-            text: "Clock",
-            icon: require("images").clockIcon
-        },
-        {
-            text: "Compute",
-            icon: require("images").computeIcons[require("l10n").getLocaleCode()]
-        },
-        {
-            text: "Programming",
-            icon: require("images").programmingIcon
-        },
-        {
-            text: "Settings",
-            icon: require("images").settingsIcon,
-            action: function() {
-                var menu = new uiMenuScreen([
-                    {
-                        text: "Test screen",
-                        action: function() {
-                            menu.open(new MainScreen());
-                        }
-                    },
-                    {text: "Hello"},
-                    {text: "World"},
-                    {text: "Testing"},
-                    {text: "Test 2"},
-                    {text: "Test 3"},
-                    {text: "Test 4"},
-                    {text: "Really long string that goes on for miles"}
-                ]);
+    require("display").clear();
+    require("display").render();
 
-                homeScreen.open(menu);
-            }
-        }
-    ]);
-
-    require("ui").openRootScreen(homeScreen);
+    setWatch(startRootScreen, BTN1, {repeat: true, edge: "falling"});
+    setWatch(startRootScreen, BTN2, {repeat: true, edge: "falling"});
+    setWatch(startRootScreen, BTN4, {repeat: true, edge: "falling"});
+    setWatch(startRootScreen, BTN3, {repeat: true, edge: "falling"});
 };

@@ -13,6 +13,7 @@ if (!BTN2.read()) {
     require("main").start();
 } else {
     g.clear();
-    g.drawString("Boot cancelled. Please repower device.", 0, 0);
+    g.drawString("Boot cancelled. Please repower", 0, 0);
+    g.drawString("device.", 0, 8);
     g.flip();
 }
