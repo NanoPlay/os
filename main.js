@@ -9,6 +9,7 @@
 
 var uiScreen = require("ui").Screen;
 var uiMenuScreen = require("ui").MenuScreen;
+var uiHomeScreen = require("home").HomeScreen;
 
 class MainScreen extends uiScreen {
     tick(event) {
@@ -31,20 +32,39 @@ class MainScreen extends uiScreen {
 exports.start = function() {
     NRF.nfcURL("https://subnodal.com");
 
-    var menu = new uiMenuScreen([
+    // var menu = new uiMenuScreen([
+    //     {
+    //         text: "Test screen",
+    //         action: function() {
+    //             menu.open(new MainScreen());
+    //         }
+    //     },
+    //     {text: "Hello"},
+    //     {text: "World"},
+    //     {text: "Testing"},
+    //     {text: "Test 2"},
+    //     {text: "Test 3"},
+    //     {text: "Test 4"},
+    //     {text: "Really long string that goes on for miles"}
+    // ]);
+
+    var menu = new uiHomeScreen([
         {
-            text: "Test screen",
-            action: function() {
-                menu.open(new MainScreen());
-            }
+            text: "Clock",
+            icon: require("images").clockIcon
         },
-        {text: "Hello"},
-        {text: "World"},
-        {text: "Testing"},
-        {text: "Test 2"},
-        {text: "Test 3"},
-        {text: "Test 4"},
-        {text: "Really long string that goes on for miles"}
+        {
+            text: "Compute",
+            icon: require("images").computeIcons[require("l10n").getLocaleCode()]
+        },
+        {
+            text: "Programming",
+            icon: require("images").programmingIcon
+        },
+        {
+            text: "Settings",
+            icon: require("images").settingsIcon
+        }
     ]);
 
     require("ui").openRootScreen(menu);

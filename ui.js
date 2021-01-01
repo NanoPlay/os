@@ -111,7 +111,7 @@ exports.Screen = class {
 
         if (
             this._buttonStateSerial == this._lastButtonStateSerial &&
-            new Date().getTime() - this._lastRefreshed < Math.min(this.idleRefreshInterval, 1000)
+            new Date().getTime() - this._lastRefreshed < Math.max(this.idleRefreshInterval, 1000)
         ) {
             return this.isOpen;
         }

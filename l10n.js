@@ -29,6 +29,10 @@ exports.loadLocale = function() {
     exports.locale = require("Storage").readJSON("lc_" + config.properties.language + ".json");
 };
 
+exports.getLocaleCode = function() {
+    return config.properties.language;
+};
+
 exports.formatDate = function(text, date) {
     text = text
         .replace("%a", exports.locale.formats.weekdaysShort[date.getDay()])
