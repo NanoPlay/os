@@ -69,6 +69,18 @@ exports.batteryStatus[8] = {
     buffer: atob("/9///////AAA")
 };
 
+exports.pageUp = {
+    width: 5,
+    height: 5,
+    buffer: atob("AR3wAA==")
+};
+
+exports.pageDown = {
+    width: 5,
+    height: 5,
+    buffer: atob("B9xAAA==")
+};
+
 exports.clockIcon = {
     width: 30,
     height: 17,

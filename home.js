@@ -13,6 +13,7 @@ exports.HomeScreen = class extends uiScreen {
     constructor(items) {
         super();
 
+        this.showStatusBar = false;
         this.idleRefreshInterval = 5000;
 
         this.items = items;
@@ -28,12 +29,23 @@ exports.HomeScreen = class extends uiScreen {
             [65, 31]
         ];
 
+        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+            this.close();
+        }
+
+        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+            if (this.items[(this.page * 4) + this.selectedPageItem].action != undefined) {
+                this.items[(this.page * 4) + this.selectedPageItem].action();
+            }
+        }
+
         if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
             this.selectedPageItem--;
         }
 
         if (this.selectedPageItem < 0) {
             this.selectedPageItem = 3;
+            this.page--;
         }
 
         if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
@@ -42,6 +54,21 @@ exports.HomeScreen = class extends uiScreen {
 
         if (this.selectedPageItem > 3) {
             this.selectedPageItem = 0;
+            this.page++;
+        }
+
+        if (this.page < 0) {
+            this.page = Math.ceil(this.items.length / 4) - 1;
+            this.selectedPageItem = (this.items.length - 1) % 4;
+        }
+
+        if ((this.page * 4) + this.selectedPageItem >= this.items.length) {
+            this.page = 0;
+            this.selectedPageItem = 0;
+        }
+
+        if ((this.page * 4) + this.selectedPageItem >= this.items.length) {
+            this.selectedPageItem = (this.items.length - 1) % 4;
         }
 
         for (var i = 0; i < 4; i++) {
@@ -66,7 +93,9 @@ exports.HomeScreen = class extends uiScreen {
                     g.setColor(1);
                 }
 
-                g.drawImage(this.items[(this.page * 4) + i].icon, iconPlacement[i][0] + 1, iconPlacement[i][1] + 1);
+                if (this.items[(this.page * 4) + i].icon.width <= 44 && this.items[(this.page * 4) + i].icon.height <= 17) {
+                    g.drawImage(this.items[(this.page * 4) + i].icon, iconPlacement[i][0] + 1, iconPlacement[i][1] + 1);
+                }
 
                 g.setBgColor(0);
                 g.setColor(1);
@@ -84,5 +113,10 @@ exports.HomeScreen = class extends uiScreen {
         }
 
         require("ui").drawButtonIcons("sleep", "ok", "left", "right");
+
+        require("ui").drawStatusBar({
+            pageUp: this.page > 0,
+            pageDown: this.page + 1 < Math.ceil(this.items.length / 4)
+        });
     }
 };

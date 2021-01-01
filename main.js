@@ -32,23 +32,7 @@ class MainScreen extends uiScreen {
 exports.start = function() {
     NRF.nfcURL("https://subnodal.com");
 
-    // var menu = new uiMenuScreen([
-    //     {
-    //         text: "Test screen",
-    //         action: function() {
-    //             menu.open(new MainScreen());
-    //         }
-    //     },
-    //     {text: "Hello"},
-    //     {text: "World"},
-    //     {text: "Testing"},
-    //     {text: "Test 2"},
-    //     {text: "Test 3"},
-    //     {text: "Test 4"},
-    //     {text: "Really long string that goes on for miles"}
-    // ]);
-
-    var menu = new uiHomeScreen([
+    var homeScreen = new uiHomeScreen([
         {
             text: "Clock",
             icon: require("images").clockIcon
@@ -63,9 +47,28 @@ exports.start = function() {
         },
         {
             text: "Settings",
-            icon: require("images").settingsIcon
+            icon: require("images").settingsIcon,
+            action: function() {
+                var menu = new uiMenuScreen([
+                    {
+                        text: "Test screen",
+                        action: function() {
+                            menu.open(new MainScreen());
+                        }
+                    },
+                    {text: "Hello"},
+                    {text: "World"},
+                    {text: "Testing"},
+                    {text: "Test 2"},
+                    {text: "Test 3"},
+                    {text: "Test 4"},
+                    {text: "Really long string that goes on for miles"}
+                ]);
+
+                homeScreen.open(menu);
+            }
         }
     ]);
 
-    require("ui").openRootScreen(menu);
+    require("ui").openRootScreen(homeScreen);
 };

@@ -120,6 +120,20 @@ exports.batteryStatus[8] = Graphics.createImage(`
 ##########
 `);
 
+exports.pageUp = Graphics.createImage(`
+
+  #
+ ###
+#####
+`);
+
+exports.pageDown = Graphics.createImage(`
+
+#####
+ ###
+  #
+`);
+
 exports.clockIcon = Graphics.createImage(`
 
                     #####

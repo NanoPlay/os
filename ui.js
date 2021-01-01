@@ -101,13 +101,13 @@ exports.Screen = class {
     tick() {}
 
     next() {
-        if (this.openedScreen != null) {
-            if (!this.openedScreen.next()) {
-                this.openedScreen = null;
-            }
+        // if (this.openedScreen != null) {
+        //     if (!this.openedScreen.next()) {
+        //         this.openedScreen = null;
+        //     }
 
-            return this.isOpen;
-        }
+        //     return this.isOpen;
+        // }
 
         if (
             this._buttonStateSerial == this._lastButtonStateSerial &&
@@ -158,6 +158,8 @@ var screenClass = exports.Screen;
 exports.MenuScreen = class extends screenClass {
     constructor(menuItems) {
         super();
+
+        this.idleRefreshInterval = 3000;
 
         this.menuItems = menuItems;
         
@@ -234,11 +236,26 @@ exports.MenuScreen = class extends screenClass {
 };
 
 exports.drawStatusBar = function() {
+    var options = arguments[0] || {};
+
     g.clearRect(0, 0, 127, 6);
 
     require("display").drawCharsMini(require("l10n").formatDate("%g", new Date()), 1, 1);
 
     g.drawImage(require("images").batteryStatus[Math.floor(E.getBattery() / 12.5)], 116, 1);
+
+    if (options.pageUp) {
+        if (options.pageDown) {
+            g.drawImage(require("images").pageUp, 102, 1);
+        } else {
+            g.drawImage(require("images").pageUp, 109, 1);
+        }
+    }
+
+    if (options.pageDown) {
+        g.drawImage(require("images").pageDown, 109, 1);
+    }
+
     g.drawLine(0, 7, 127, 7);
 };
 
@@ -256,10 +273,24 @@ exports.openRootScreen = function(screen) {
 
     var loop = setInterval(function() {
         try {
-            if (!screen.next()) {
-                clearInterval(loop);
+            var currentScreen = screen;
+            var parentScreen = null;
 
-                closeCallback();
+            while (currentScreen.openedScreen != null) {
+                parentScreen = currentScreen;
+                currentScreen = currentScreen.openedScreen;
+            }
+
+            var shouldContinue = currentScreen.next();
+
+            if (!shouldContinue) {
+                if (currentScreen == screen) {
+                    clearInterval(loop);
+    
+                    closeCallback();
+                } else {
+                    parentScreen.openedScreen = null;
+                }
             }
         } catch (e) {
             clearInterval(loop);
