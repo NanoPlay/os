@@ -122,21 +122,21 @@ exports.batteryStatus[8] = Graphics.createImage(`
 
 exports.clockIcon = Graphics.createImage(`
 
-                     #####
-                   ##     ##
-                  #    #    #
-                 #     #     #
-                 #     #     #
-                #      #      #
-                #      #      #
-                #      #      #
-                #       ##    #
-                #         ##  #
-                 #           #
-                 #           #
-                  #         #
-                   ##     ##
-                     #####
+                    #####
+                  ##     ##
+                 #    #    #
+                #     #     #
+                #     #     #
+               #      #      #
+               #      #      #
+               #      #      #
+               #       ##    #
+               #         ##  #
+                #           #
+                #           #
+                 #         #
+                  ##     ##
+                    #####
 `);
 
 exports.computeIcons = {};

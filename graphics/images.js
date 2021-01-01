@@ -70,9 +70,9 @@ exports.batteryStatus[8] = {
 };
 
 exports.clockIcon = {
-    width: 31,
+    width: 30,
     height: 17,
-    buffer: atob("AAAAAAAAD4AAAGDAAAEIQAAEEEAACCCAACBAgABAgQAAgQIAAQGEAAIAyAACACAABABAAAQBAAAGDAAAA+AAAAAA")
+    buffer: atob("AAAAAAAAPgAAAwYAABCEAACCCAACCCAAECBAAECBAAECBAAEBhAAEAZAACACAACACAABAEAAAwYAAAPgAAAAAA==")
 };
 
 exports.computeIcons = {};
