@@ -78,13 +78,13 @@ exports.Button = class {
 exports.Screen = class {
     constructor() {
         this._lastButtonStateSerial = null;
-        this._lastRefreshed = -1000;
+        this._lastRefreshed = -3000;
 
         this.showStatusBar = true;
         this.alwaysClear = true;
         this.isOpen = true;
         this.openedScreen = null;
-        this.idleRefreshInterval = 1000;
+        this.idleRefreshInterval = 3000;
     }
 
     get _buttonStateSerial() {
@@ -152,7 +152,6 @@ exports.MenuScreen = class extends screenClass {
         super();
 
         this.showStatusBar = false;
-        this.idleRefreshInterval = 3000;
 
         this.menuItems = menuItems;
         
@@ -238,7 +237,13 @@ exports.ExpressionScreen = class extends screenClass {
         super();
 
         this.value = [];
-        this.symbols = [];
+        this.valueSaved = false;
+
+        this.symbols = [{
+            symbol: ["ok"],
+            type: "exit"
+        }];
+
         this.selectedSymbol = 0;
 
         this.loadBasicSymbols(basicSymbols);
@@ -246,21 +251,56 @@ exports.ExpressionScreen = class extends screenClass {
 
     loadBasicSymbols(basicSymbols) {
         for (var i = 0; i < basicSymbols.length; i++) {
-            this.symbols.push({
-                symbol: basicSymbols[i],
-                type: "immediate"
-            });
+            this.symbols.push({symbol: basicSymbols[i]});
         }
     }
 
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == exports.buttonStatus.PRESSED) {
+            if (this.value.length > 0) {
+                this.value.pop();
+            } else {
+                this.close();                
+            }
+        } else if (event.buttons.tl == exports.buttonStatus.LONG_PRESSED) {
             this.close();
         }
 
-        require("display").drawCharsFromCell(this.value.join(""), 0, 0);
+        if (event.buttons.tr == exports.buttonStatus.PRESSED) {
+            if (this.symbols[this.selectedSymbol].type == "action") {
+                this.symbols[this.selectedSymbol].action();
+            } if (this.symbols[this.selectedSymbol].type == "exit") {
+                this.valueSaved = true;
 
-        var middleSymbolCx = Math.floor(((14 - this.symbols[this.selectedSymbol].symbol) / 2) + 1);
+                this.close();
+            } else {
+                this.value.push(this.symbols[this.selectedSymbol].symbol);
+            }
+        } else if (event.buttons.tr == exports.buttonStatus.LONG_PRESSED) {
+            this.valueSaved = true;
+
+            this.close();
+        }
+
+        if (event.buttons.bl == exports.buttonStatus.PRESSED) {
+            this.selectedSymbol--;
+        }
+
+        if (event.buttons.br == exports.buttonStatus.PRESSED) {
+            this.selectedSymbol++;
+        }
+
+        if (this.selectedSymbol < 0) {
+            this.selectedSymbol = this.symbols.length - 1;
+        }
+
+        if (this.selectedSymbol >= this.symbols.length) {
+            this.selectedSymbol = 0;
+        }
+
+        require("display").drawCharsFromCell(this.value.join("").slice(-16), 0, 1);
+
+        var middleSymbolCx = Math.floor(((14 - this.symbols[this.selectedSymbol].symbol.length) / 2) + 1);
         var leftSymbolCx = middleSymbolCx;
         var rightSymbolCx = middleSymbolCx + this.symbols[this.selectedSymbol].symbol.length;
         var currentRenderingSymbol = this.selectedSymbol;
@@ -271,7 +311,7 @@ exports.ExpressionScreen = class extends screenClass {
         
         require("display").drawCharsFromCell(this.symbols[this.selectedSymbol].symbol, middleSymbolCx, 3, true);
 
-        while (leftSymbolCx > 0 && currentRenderingSymbol > 0) {
+        while (currentRenderingSymbol > 0) {
             currentRenderingSymbol--;
             leftSymbolCx -= this.symbols[currentRenderingSymbol].symbol.length;
 
@@ -280,7 +320,7 @@ exports.ExpressionScreen = class extends screenClass {
 
         currentRenderingSymbol = this.selectedSymbol;
 
-        while (leftSymbolCx > 0 && currentRenderingSymbol < this.symbols.length - 1) {
+        while (currentRenderingSymbol < this.symbols.length - 1) {
             currentRenderingSymbol++;
 
             require("display").drawCharsFromCell(this.symbols[currentRenderingSymbol].symbol, rightSymbolCx, 3);
@@ -288,7 +328,10 @@ exports.ExpressionScreen = class extends screenClass {
             rightSymbolCx += this.symbols[currentRenderingSymbol].symbol.length;
         }
 
-        require("ui").drawButtonIcons(this.value.length > 0 ? "backspace" : "cancel", "ok", "left", "right");
+        require("display").fillCells(0, 3, 1, 1);
+        require("display").fillCells(15, 3, 1, 1);
+
+        exports.drawButtonIcons(this.value.length > 0 ? "backspace" : "cancel", "ok", "left", "right");
     }
 };
 

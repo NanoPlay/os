@@ -51,7 +51,7 @@ function startRootScreen() {
                 action: function() {
                     var expressionClass = require("ui").ExpressionScreen;
 
-                    homeScreen.open(new expressionClass(["1", "2", "3"]));
+                    homeScreen.open(new expressionClass(["1", "2", "3", "Answer", "Test 2", "Test 3"]));
                 }
             },
             {
