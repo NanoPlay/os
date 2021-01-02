@@ -38,7 +38,12 @@ function startRootScreen() {
         var homeScreen = new uiHomeScreen([
             {
                 text: "Clock",
-                icon: require("images").clockIcon
+                icon: require("images").clockIcon,
+                action: function() {
+                    var screenClass = require("clock").ClockScreen;
+
+                    homeScreen.open(new screenClass());
+                }
             },
             {
                 text: "Compute",

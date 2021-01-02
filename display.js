@@ -31,6 +31,8 @@ exports.drawChars = function(chars, x, y) {
         g.setColor(1);
     }
 
+    g.setFont("6x8");
+
     for (var i = 0; i < chars.length; i++) {
         if (charset[chars[i]] != undefined) {
             g.drawImage(charset[chars[i]], x + (i * 8), y);
