@@ -233,6 +233,65 @@ exports.MenuScreen = class extends screenClass {
     }
 };
 
+exports.ExpressionScreen = class extends screenClass {
+    constructor(basicSymbols) {
+        super();
+
+        this.value = [];
+        this.symbols = [];
+        this.selectedSymbol = 0;
+
+        this.loadBasicSymbols(basicSymbols);
+    }
+
+    loadBasicSymbols(basicSymbols) {
+        for (var i = 0; i < basicSymbols.length; i++) {
+            this.symbols.push({
+                symbol: basicSymbols[i],
+                type: "immediate"
+            });
+        }
+    }
+
+    tick(event) {
+        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+            this.close();
+        }
+
+        require("display").drawCharsFromCell(this.value.join(""), 0, 0);
+
+        var middleSymbolCx = Math.floor(((14 - this.symbols[this.selectedSymbol].symbol) / 2) + 1);
+        var leftSymbolCx = middleSymbolCx;
+        var rightSymbolCx = middleSymbolCx + this.symbols[this.selectedSymbol].symbol.length;
+        var currentRenderingSymbol = this.selectedSymbol;
+
+        for (var i = 0; i < this.symbols[this.selectedSymbol].symbol.length; i++) {
+            require("display").fillCells(middleSymbolCx + i, 3, 1, 1, true);
+        }
+        
+        require("display").drawCharsFromCell(this.symbols[this.selectedSymbol].symbol, middleSymbolCx, 3, true);
+
+        while (leftSymbolCx > 0 && currentRenderingSymbol > 0) {
+            currentRenderingSymbol--;
+            leftSymbolCx -= this.symbols[currentRenderingSymbol].symbol.length;
+
+            require("display").drawCharsFromCell(this.symbols[currentRenderingSymbol].symbol, leftSymbolCx, 3);
+        }
+
+        currentRenderingSymbol = this.selectedSymbol;
+
+        while (leftSymbolCx > 0 && currentRenderingSymbol < this.symbols.length - 1) {
+            currentRenderingSymbol++;
+
+            require("display").drawCharsFromCell(this.symbols[currentRenderingSymbol].symbol, rightSymbolCx, 3);
+
+            rightSymbolCx += this.symbols[currentRenderingSymbol].symbol.length;
+        }
+
+        require("ui").drawButtonIcons(this.value.length > 0 ? "backspace" : "cancel", "ok", "left", "right");
+    }
+};
+
 exports.drawStatusBar = function() {
     var options = arguments[0] || {};
 

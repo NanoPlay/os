@@ -47,7 +47,12 @@ function startRootScreen() {
             },
             {
                 text: "Compute",
-                icon: require("images").computeIcons[require("l10n").getLocaleCode()]
+                icon: require("images").computeIcons[require("l10n").getLocaleCode()],
+                action: function() {
+                    var expressionClass = require("ui").ExpressionScreen;
+
+                    homeScreen.open(new expressionClass(["1", "2", "3"]));
+                }
             },
             {
                 text: "Programming",
