@@ -79,6 +79,7 @@ function startRootScreen() {
         require("ui").buttons.br.statusBuffer = [];
 
         LED.write(1);
+        Pixl.setLCDPower(true);
 
         require("ui").openRootScreen(homeScreen, function() {
             rootScreenIsOpen = false;
@@ -87,12 +88,16 @@ function startRootScreen() {
             require("display").render();
 
             LED.write(0);
+            Pixl.setLCDPower(false);
         });
     }
 }
 
 exports.start = function() {
     NRF.nfcURL("https://subnodal.com");
+
+    LED.write(0);
+    Pixl.setLCDPower(false);
 
     require("display").clear();
     require("display").render();
