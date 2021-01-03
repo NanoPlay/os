@@ -149,7 +149,7 @@ var screenClass = exports.Screen;
 
 exports.MenuScreen = class extends screenClass {
     constructor(menuItems) {
-        super();
+        screenClass.prototype.constructor.call(this);
 
         this.showStatusBar = false;
 
@@ -236,6 +236,7 @@ exports.ExpressionScreen = class extends screenClass {
     constructor(basicSymbols) {
         screenClass.prototype.constructor.call(this);
 
+        this.message = "";
         this.value = [];
         this.valueSaved = false;
 
@@ -282,10 +283,14 @@ exports.ExpressionScreen = class extends screenClass {
 
         if (event.buttons.bl == exports.buttonStatus.PRESSED) {
             this.selectedSymbol--;
+        } else if (event.buttons.bl == exports.buttonStatus.LONG_PRESSED) {
+            this.selectedSymbol -= 10;
         }
 
         if (event.buttons.br == exports.buttonStatus.PRESSED) {
             this.selectedSymbol++;
+        } else if (event.buttons.br == exports.buttonStatus.LONG_PRESSED) {
+            this.selectedSymbol += 10;
         }
 
         if (this.selectedSymbol < 0) {
@@ -296,6 +301,7 @@ exports.ExpressionScreen = class extends screenClass {
             this.selectedSymbol = 0;
         }
 
+        require("display").drawCharsFromCell(this.message, 2, 0);
         require("display").drawCharsFromCell(this.value.join("").slice(-16), 0, 1);
 
         var middleSymbolCx = Math.floor(((14 - this.symbols[this.selectedSymbol].symbol.length) / 2) + 1);
@@ -328,6 +334,8 @@ exports.ExpressionScreen = class extends screenClass {
 
         require("display").fillCells(0, 3, 1, 1);
         require("display").fillCells(15, 3, 1, 1);
+        
+        g.drawLine(0, 49, 127, 49);
 
         exports.drawButtonIcons(this.value.length > 0 ? "backspace" : "cancel", "ok", "left", "right");
     }

@@ -9,18 +9,20 @@
 
 exports.registeredSymbols = {
     "[\"multiply\"]": "*",
-    "[\"divide\"]": "/"
+    "[\"divide\"]": "/",
+    "\" mod \"": "%",
+    "\"sin(\"": " Math.sin((Math.PI/180)*",
+    "\"cos(\"": " Math.cos((Math.PI/180)*",
+    "\"tan(\"": " Math.tan((Math.PI/180)*",
+    "\"sin-1(\"": " (180/Math.PI)*Math.asin(",
+    "\"cos-1(\"": " (180/Math.PI)*Math.acos(",
+    "\"tan-1(\"": " (180/Math.PI)*Math.atan(",
+    "\"log(\"": "Math.log10(",
+    "\"ln(\"": "Math.log(",
+    "\"pi\"": "Math.PI"
 };
 
 exports.variables = {};
-
-exports.stringOnlySymbols = "abcdefghijklmnopqrstuvwxyz".split("");
-
-function registerSymbolsFromText(symbols) {
-    for (var i = 0; i < symbols.length; i++) {
-        exports.registeredSymbols[JSON.stringify(symbols[i])] = symbols[i];
-    }
-}
 
 function registerVariables(symbols) {
     for (var i = 0; i < symbols.length; i++) {
@@ -37,17 +39,14 @@ exports.evaluate = function(expression) {
             inString = !inString;
         }
 
-        if (inString && JSON.stringify(expression[i]) in exports.variables) {
+        if (JSON.stringify(expression[i]) in exports.variables) {
             jsString += JSON.stringify(exports.variables[JSON.stringify(expression[i])]);
         } else {
-            if (!exports.stringOnlySymbols.includes(JSON.stringify(expression[i]))) {
-                jsString += exports.registeredSymbols[JSON.stringify(expression[i])];
-            }
+            jsString += exports.registeredSymbols[JSON.stringify(expression[i])] || expression[i];
         }
     }
 
     return eval(jsString);
 };
 
-registerSymbolsFromText("0123456789.+-\"".split(""));
-registerVariables("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""));
+registerVariables("ABCDEF".split(""));

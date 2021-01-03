@@ -10,6 +10,14 @@
 var uiScreen = require("ui").Screen;
 var uiExpressionScreen = require("ui").ExpressionScreen;
 
+exports.expressionSymbols = [];
+
+function addExpressionSymbols(symbols) {
+    for (var i = 0; i < symbols.length; i++) {
+        exports.expressionSymbols.push(symbols[i]);
+    }
+}
+
 class ComputeResultScreen extends uiScreen {
     constructor(result) {
         super();
@@ -41,6 +49,10 @@ class ComputeErrorScreen extends uiScreen {
 };
 
 exports.ComputeScreen = class extends uiExpressionScreen {
+    constructor() {
+        uiExpressionScreen.prototype.constructor.call(this, exports.expressionSymbols);
+    }
+
     process() {
         try {
             var result = require("expressions").evaluate(this.value);
@@ -51,3 +63,8 @@ exports.ComputeScreen = class extends uiExpressionScreen {
         }
     }
 };
+
+addExpressionSymbols("0123456789.+-".split(""));
+addExpressionSymbols([["multiply"], ["divide"], "(", ")", " mod ", "\""]);
+addExpressionSymbols(" ABCDEF".split(""));
+addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi"]);
