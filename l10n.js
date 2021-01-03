@@ -69,13 +69,13 @@ exports.formatDate = function(text, date) {
 
     if (arguments[2] != true) {
         text = text
-            .replace("%c", exports.formatDate(exports.locale.formats.dateAndTimeShort, date, true))
-            .replace("%C", exports.formatDate(exports.locale.formats.dateAndTimeLong, date, true))
-            .replace("%x", exports.formatDate(exports.locale.formats.dateNumerical, date, true))
-            .replace("%X", exports.formatDate(exports.locale.formats.timeNumerical, date, true))
-            .replace("%e", exports.formatDate(exports.locale.formats.dateShort, date, true))
-            .replace("%E", exports.formatDate(exports.locale.formats.dateLong, date, true))
-            .replace("%g", exports.formatDate(exports.locale.formats.timeNumericalShort, date, true))
+            .replace("%c", exports.formatDate("%a %-d %b %Y %H:%M:%S", date, true))
+            .replace("%C", exports.formatDate("%A %-d %B %Y %H:%M:%S", date, true))
+            .replace("%x", exports.formatDate("%a %-d %b %Y", date, true))
+            .replace("%X", exports.formatDate("%A %-d %B %Y", date, true))
+            .replace("%e", exports.formatDate("%d/%m/%Y", date, true))
+            .replace("%E", exports.formatDate("%H:%M:%S", date, true))
+            .replace("%g", exports.formatDate("%H:%M", date, true))
         ;
     }
 

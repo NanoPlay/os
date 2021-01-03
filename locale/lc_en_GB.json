@@ -17,13 +17,6 @@
         "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         "am": "AM",
-        "pm": "PM",
-        "dateAndTimeShort": "%a %-d %b %Y %H:%M:%S",
-        "dateAndTimeLong": "%A %-d %B %Y %H:%M:%S",
-        "dateShort": "%a %-d %b %Y",
-        "dateLong": "%A %-d %B %Y",
-        "dateNumerical": "%d/%m/%Y",
-        "timeNumerical": "%H:%M:%S",
-        "timeNumericalShort": "%H:%M"
+        "pm": "PM"
     }
 }
