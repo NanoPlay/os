@@ -3,7 +3,13 @@
     "nameShort": "English",
     "textDirection": "ltr",
     "strings": {
-        "hello": "Hello, world!"
+        "hello": "Hello, world!",
+        "clock": "Clock",
+        "compute": "Compute",
+        "programming": "Programming",
+        "settings": "Settings",
+        "resultError0": "Expression error",
+        "resultError1": ""
     },
     "formats": {
         "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],

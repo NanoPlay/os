@@ -13,6 +13,10 @@ var uiHomeScreen = require("home").HomeScreen;
 
 var rootScreenIsOpen = false;
 
+function _(text) {
+    return require("l10n").translate(text);
+}
+
 class MainScreen extends uiScreen {
     tick(event) {
         g.drawImage(require("images").logo, 34, 13);
@@ -24,7 +28,7 @@ class MainScreen extends uiScreen {
         } else if (event.buttons.tr == require("ui").buttonStatus.LONG_PRESSED) {
             require("display").drawCharsFromCell("Long press!", 1, 3);
         } else {
-            require("display").drawCharsFromCell(require("l10n").translate("hello"), 1, 3);
+            require("display").drawCharsFromCell(_("hello"), 1, 3);
         }
 
         require("ui").drawButtonIcons("back", "ok", "left", "right");
@@ -37,7 +41,7 @@ function startRootScreen() {
 
         var homeScreen = new uiHomeScreen([
             {
-                text: "Clock",
+                text: _("clock"),
                 icon: require("images").clockIcon,
                 action: function() {
                     var screenClass = require("clock").ClockScreen;
@@ -46,20 +50,20 @@ function startRootScreen() {
                 }
             },
             {
-                text: "Compute",
+                text: _("compute"),
                 icon: require("images").computeIcons[require("l10n").getLocaleCode()],
                 action: function() {
-                    var expressionClass = require("ui").ExpressionScreen;
+                    var screenClass = require("compute").ComputeScreen;
 
-                    homeScreen.open(new expressionClass(["1", "2", "3", "Answer", "Test 2", "Test 3"]));
+                    homeScreen.open(new screenClass(["1", "2", "3", "+"]));
                 }
             },
             {
-                text: "Programming",
+                text: _("programming"),
                 icon: require("images").programmingIcon
             },
             {
-                text: "Settings",
+                text: _("settings"),
                 icon: require("images").settingsIcon,
                 action: function() {
                     var menu = new uiMenuScreen([

@@ -37,4 +37,4 @@ for path, directories, files in os.walk("."):
             else:
                 minify(os.path.join(path, file), os.path.join("build", file.split(".")[0]))
         elif file.endswith(".json"):
-            copy(os.path.join(path, file), os.path.join("build", file))
+            minify(os.path.join(path, file), os.path.join("build", file))

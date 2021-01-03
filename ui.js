@@ -234,14 +234,14 @@ exports.MenuScreen = class extends screenClass {
 
 exports.ExpressionScreen = class extends screenClass {
     constructor(basicSymbols) {
-        super();
+        screenClass.prototype.constructor.call(this);
 
         this.value = [];
         this.valueSaved = false;
 
         this.symbols = [{
             symbol: ["ok"],
-            type: "exit"
+            type: "process"
         }];
 
         this.selectedSymbol = 0;
@@ -254,6 +254,8 @@ exports.ExpressionScreen = class extends screenClass {
             this.symbols.push({symbol: basicSymbols[i]});
         }
     }
+
+    process() {}
 
     tick(event) {
         if (event.buttons.tl == exports.buttonStatus.PRESSED) {
@@ -269,17 +271,13 @@ exports.ExpressionScreen = class extends screenClass {
         if (event.buttons.tr == exports.buttonStatus.PRESSED) {
             if (this.symbols[this.selectedSymbol].type == "action") {
                 this.symbols[this.selectedSymbol].action();
-            } if (this.symbols[this.selectedSymbol].type == "exit") {
-                this.valueSaved = true;
-
-                this.close();
+            } if (this.symbols[this.selectedSymbol].type == "process") {
+                this.process();
             } else {
                 this.value.push(this.symbols[this.selectedSymbol].symbol);
             }
         } else if (event.buttons.tr == exports.buttonStatus.LONG_PRESSED) {
-            this.valueSaved = true;
-
-            this.close();
+            this.process();
         }
 
         if (event.buttons.bl == exports.buttonStatus.PRESSED) {
