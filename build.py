@@ -6,16 +6,14 @@
 import os
 import shutil
 import pathlib
-import jsmin
+import subprocess
+import json
 
-def minify(a, b):
-    inputCode = open(a, "r").read()
-    outputCode = jsmin.jsmin(inputCode)
-
-    outputFile = open(b, "w")
-
-    outputFile.write(outputCode)
-    outputFile.close()
+def minify(a, b, isJson = False):
+    if isJson:
+        json.dump(json.load(open(a, "r")), open(b, "w"), separators = (",", ":"))
+    else:
+        subprocess.Popen(["terser", a, "-o", b, "-m"]).communicate()
 
 def copy(a, b):
     inputCode = open(a, "r").read()
@@ -37,4 +35,4 @@ for path, directories, files in os.walk("."):
             else:
                 minify(os.path.join(path, file), os.path.join("build", file.split(".")[0]))
         elif file.endswith(".json"):
-            minify(os.path.join(path, file), os.path.join("build", file))
+            minify(os.path.join(path, file), os.path.join("build", file), True)
