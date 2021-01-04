@@ -17,23 +17,23 @@ function _(text) {
     return require("l10n").translate(text);
 }
 
-// class MainScreen extends uiScreen {
-//     tick(event) {
-//         g.drawImage(require("images").logo, 34, 13);
+class MainScreen extends uiScreen {
+    tick(event) {
+        g.drawImage(require("images").logo, 34, 13);
 
-//         if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
-//             this.close();
-//         } else if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
-//             require("display").drawCharsFromCell("Press!", 1, 3);
-//         } else if (event.buttons.tr == require("ui").buttonStatus.LONG_PRESSED) {
-//             require("display").drawCharsFromCell("Long press!", 1, 3);
-//         } else {
-//             require("display").drawCharsFromCell(_("hello"), 1, 3);
-//         }
+        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+            this.close();
+        } else if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+            require("display").drawCharsFromCell("Press!", 1, 3);
+        } else if (event.buttons.tr == require("ui").buttonStatus.LONG_PRESSED) {
+            require("display").drawCharsFromCell("Long press!", 1, 3);
+        } else {
+            require("display").drawCharsFromCell(_("hello"), 1, 3);
+        }
 
-//         require("ui").drawButtonIcons("back", "ok", "left", "right");
-//     }
-// }
+        require("ui").drawButtonIcons("back", "ok", "left", "right");
+    }
+}
 
 function startRootScreen() {
     if (!rootScreenIsOpen) {
