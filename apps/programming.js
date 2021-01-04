@@ -7,7 +7,6 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-const PROGRAM_FILE_SIZE = 512;
 const LANG_VERSION = 0;
 
 var uiScreen = require("ui").Screen;
@@ -42,6 +41,7 @@ exports.ProgrammingScreen = class extends uiScreen {
         this.filename = null;
 
         this.menuScreenWasOpen = false;
+        this.scrollPosition = 0;
     }
 
     openProgram(filename) {
@@ -49,23 +49,28 @@ exports.ProgrammingScreen = class extends uiScreen {
         this.filename = filename;
     }
 
-    saveProgram() {
-        var json = JSON.stringify(this.program);
-
-        // We buffer the file with PROGRAM_FILE_SIZE to ensure that program files fit nicely in the flash memory
-        require("Storage").write(this.filename, json + " ".repeat(PROGRAM_FILE_SIZE - json.length));
-    }
-
     tick(event) {
         var thisScope = this;
 
         if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
             if (this.filename != null) {
-                this.saveProgram();
-
                 this.filename = null;
                 this.menuScreenWasOpen = false;
             }
+        }
+
+        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+            var uiExpresionScreen = require("ui").ExpressionScreen;
+
+            this.open(new uiExpresionScreen(require("compute").expressionSymbols));
+        }
+
+        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+            this.scrollPosition--;
+        }
+
+        if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+            this.scrollPosition++;
         }
 
         if (this.menuScreenWasOpen && this.filename == null) {
@@ -75,18 +80,7 @@ exports.ProgrammingScreen = class extends uiScreen {
         }
 
         if (this.filename == null) {
-            let menuScreen = new uiMenuScreen([
-                {
-                    text: "+ " + _("new"),
-                    action: function() {
-                        thisScope.program = {p: [], v: LANG_VERSION};
-                        thisScope.filename = String(Math.floor(Math.random() * 1e4)).padStart(4, "0") + ".np";
-
-                        menuScreen.close();
-                    }
-                }
-            ]);
-
+            let menuScreen = new uiMenuScreen([]);
             let storageList = require("Storage").list();
 
             for (var i = 0; i < storageList.length; i++) {
@@ -111,31 +105,54 @@ exports.ProgrammingScreen = class extends uiScreen {
         } else {
             var sourceMap = getSourceMap(this.program["p"]);
 
-            for (var i = 0; i < 4; i++) {
-                if (i < sourceMap.length) {
-                    var sourceText = [];
+            require("ui").drawButtonIcons("back", "play", "up", "down");
 
-                    for (var j = 0; j < sourceMap[i][0]; j++) {
-                        sourceText.push(["indent"]);
-                    }
+            for (var i = 0; i < sourceMap.length; i++) {
+                var sourceText = [];
 
-                    sourceText = sourceText.concat(_("cmd" + sourceMap[i][1]).split(""));
+                for (var j = 0; j < sourceMap[i][0]; j++) {
+                    sourceText.push(["indent"]);
+                }
 
-                    for (var j = 0; j < sourceMap[i][2].length; j++) {
-                        sourceText.push(" ");
+                sourceText = sourceText.concat(_("cmd" + sourceMap[i][1]).split(""));
 
-                        for (var k = 0; k < sourceMap[i][2][j].length; k++) {
-                            if (typeof(sourceMap[i][2][j][k]) == "string") {
-                                sourceText = sourceText.concat(sourceMap[i][2][j][k].split(""));
-                            } else {
-                                sourceText.push(sourceMap[i][2][j][k]);
-                            }
+                for (var j = 0; j < sourceMap[i][2].length; j++) {
+                    sourceText.push(" ");
+
+                    for (var k = 0; k < sourceMap[i][2][j].length; k++) {
+                        if (typeof(sourceMap[i][2][j][k]) == "string") {
+                            sourceText = sourceText.concat(sourceMap[i][2][j][k].split(""));
+                        } else {
+                            sourceText.push(sourceMap[i][2][j][k]);
                         }
                     }
+                }
 
-                    require("display").drawCharsFromCell(sourceText, 1, i);
+                if (this.scrollPosition < 0) {
+                    this.scrollPosition = sourceMap.length - 4;
+                }
+
+                if (this.scrollPosition > sourceMap.length - 4) {
+                    this.scrollPosition = 0;
+                }
+
+                var si = i - this.scrollPosition;
+
+                if (si >= 0 && si <= 3) {
+                    require("display").drawCharsFromCell(sourceText, 1, si);
+
+                    g.drawLine((sourceMap[i][0] * 8) + 8, (si * 14) + 9, (sourceText.length * 8) + 7, (si * 14) + 9);
+                    g.drawLine((sourceMap[i][0] * 8) + 8, (si * 14) + 21, (sourceText.length * 8) + 7, (si * 14) + 21);
+                    g.drawLine((sourceMap[i][0] * 8) + 7, (si * 14) + 10, (sourceMap[i][0] * 8) + 7, (si * 14) + 20);
+                    g.drawLine((sourceText.length * 8) + 8, (si * 14) + 10, (sourceText.length * 8) + 8, (si * 14) + 20);
                 }
             }
+
+            for (var i = 0; i < 4; i++) {
+                require("display").fillCells(15, i, 1, 1);
+            }
+
+            require("ui").drawButtonIcons(" ", "play", " ", "down");
         }
     }
 };
