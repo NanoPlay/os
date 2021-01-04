@@ -19,7 +19,10 @@ exports.registeredSymbols = {
     "\"tan-1(\"": " (180/Math.PI)*Math.atan(",
     "\"log(\"": "Math.log10(",
     "\"ln(\"": "Math.log(",
-    "\"pi\"": "Math.PI"
+    "\"pi\"": "Math.PI",
+    "\"=\"": "==",
+    "\"true\"": " true",
+    "\"false\"": " false"
 };
 
 exports.variables = {};

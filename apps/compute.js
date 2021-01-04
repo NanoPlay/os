@@ -19,9 +19,10 @@ function addExpressionSymbols(symbols) {
 }
 
 class ComputeResultScreen extends uiScreen {
-    constructor(result) {
+    constructor(expressionString, result) {
         super();
 
+        this.expressionString = expressionString;
         this.result = result;
     }
 
@@ -30,7 +31,8 @@ class ComputeResultScreen extends uiScreen {
             this.close();
         }
 
-        require("display").drawCharsFromCell(this.result, 0, 1);
+        require("display").drawCharsFromCell(this.expressionString, 0, 1);
+        require("display").drawCharsFromCell(" ".repeat(Math.max((16 - String(this.result).length), 0)) + this.result, 0, 2);
         require("ui").drawButtonIcons("back", " ", " ", " ");
     }
 };
@@ -57,7 +59,7 @@ exports.ComputeScreen = class extends uiExpressionScreen {
         try {
             var result = require("expressions").evaluate(this.value);
 
-            this.open(new ComputeResultScreen(String(result)));
+            this.open(new ComputeResultScreen(this.value.join(""), String(result)));
         } catch (e) {
             this.open(new ComputeErrorScreen());
         }
@@ -67,4 +69,4 @@ exports.ComputeScreen = class extends uiExpressionScreen {
 addExpressionSymbols("0123456789.+-".split(""));
 addExpressionSymbols([["multiply"], ["divide"], "(", ")", " mod ", "\""]);
 addExpressionSymbols(" ABCDEF".split(""));
-addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi"]);
+addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi", "=", "<", ">", "true", "false"]);
