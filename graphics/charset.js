@@ -120,3 +120,9 @@ exports.sleep = {
     height: 11,
     buffer: atob("AAAAAMLKFBYYAA==")
 };
+
+exports.indent = {
+    width: 4,
+    height: 14,
+    buffer: atob("MzMzMzMzMw==")
+};

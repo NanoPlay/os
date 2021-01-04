@@ -8,7 +8,6 @@
 */
 
 var charset = require("charset");
-var minichar = require("minichar");
 
 require("Font6x8").add(Graphics);
 
@@ -62,9 +61,9 @@ exports.drawCharsMini = function(chars, x, y) {
         g.setColor(1);
     }
 
-    for (var i = 0; i < chars.length; i++) {
-        g.drawImage(minichar[chars[i]], x + (i * 4), y);
-    }
+    g.setFont("4x6");
+
+    g.drawString(chars, x, y);
 
     g.setBgColor(0);
     g.setColor(1);

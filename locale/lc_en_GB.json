@@ -9,7 +9,11 @@
         "programming": "Programming",
         "settings": "Settings",
         "resultError0": "Expression error",
-        "resultError1": ""
+        "resultError1": "",
+        "new": "New",
+        "cmd0": "end",
+        "cmd1": "output",
+        "cmd2": "input"
     },
     "formats": {
         "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],

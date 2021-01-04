@@ -60,7 +60,12 @@ function startRootScreen() {
             },
             {
                 text: _("programming"),
-                icon: require("images").programmingIcon
+                icon: require("images").programmingIcon,
+                action: function() {
+                    var programmingClass = require("programming").ProgrammingScreen;
+
+                    homeScreen.open(new programmingClass());
+                }
             },
             {
                 text: _("settings"),

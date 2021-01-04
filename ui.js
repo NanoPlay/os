@@ -301,8 +301,18 @@ exports.ExpressionScreen = class extends screenClass {
             this.selectedSymbol = 0;
         }
 
+        var valueText = [];
+
+        for (var i = 0; i < this.value.length; i++) {
+            if (typeof(this.value[i]) == "string") {
+                valueText = valueText.concat(this.value[i].split(""));
+            } else {
+                valueText.push(this.value[i]);
+            }
+        }
+
         require("display").drawCharsFromCell(this.message, 2, 0);
-        require("display").drawCharsFromCell(this.value.join("").slice(-16), 0, 1);
+        require("display").drawCharsFromCell(valueText.slice(-16), 0, 1);
 
         var middleSymbolCx = Math.floor(((14 - this.symbols[this.selectedSymbol].symbol.length) / 2) + 1);
         var leftSymbolCx = middleSymbolCx;

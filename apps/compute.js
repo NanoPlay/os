@@ -58,8 +58,17 @@ exports.ComputeScreen = class extends uiExpressionScreen {
     process() {
         try {
             var result = require("expressions").evaluate(this.value);
+            var valueText = [];
 
-            this.open(new ComputeResultScreen(this.value.join(""), String(result)));
+            for (var i = 0; i < this.value.length; i++) {
+                if (typeof(this.value[i]) == "string") {
+                    valueText = valueText.concat(this.value[i].split(""));
+                } else {
+                    valueText.push(this.value[i]);
+                }
+            }
+
+            this.open(new ComputeResultScreen(valueText, String(result)));
         } catch (e) {
             this.open(new ComputeErrorScreen());
         }
