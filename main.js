@@ -11,20 +11,26 @@ var uiHomeScreen = require("home").HomeScreen;
 
 var rootScreenIsOpen = false;
 
+exports.rootScreenLoop = null;
+exports.openRootScreenAllowed = true;
+
 function _(text) {
     return require("l10n").translate(text);
 }
 
 function startRootScreen() {
-    if (!rootScreenIsOpen) {
+    if (!rootScreenIsOpen && exports.openRootScreenAllowed) {
+        Bluetooth.setConsole(true);
+
         rootScreenIsOpen = true;
 
-        var homeScreen = new uiHomeScreen([
+        let homeScreen = new uiHomeScreen([
             {
                 text: _("clock"),
                 icon: require("images").clockIcon,
+                module: "clock",
                 action: function() {
-                    var screenClass = require("clock").ClockScreen;
+                    let screenClass = require("clock").ClockScreen;
 
                     homeScreen.open(new screenClass());
                 }
@@ -32,17 +38,19 @@ function startRootScreen() {
             {
                 text: _("compute"),
                 icon: require("images").computeIcons[require("l10n").getLocaleCode()],
+                module: "compute",
                 action: function() {
-                    var screenClass = require("compute").ComputeScreen;
-
+                    let screenClass = require("compute").ComputeScreen;
+                    
                     homeScreen.open(new screenClass());
                 }
             },
             {
                 text: _("programming"),
                 icon: require("images").programmingIcon,
+                module: "programming",
                 action: function() {
-                    var programmingClass = require("programming").ProgrammingScreen;
+                    let programmingClass = require("programming").ProgrammingScreen;
 
                     homeScreen.open(new programmingClass());
                 }
@@ -50,6 +58,7 @@ function startRootScreen() {
             {
                 text: _("settings"),
                 icon: require("images").settingsIcon,
+                module: "settings",
                 action: function() {
                     require("settings").load(homeScreen);
                 }
@@ -64,7 +73,7 @@ function startRootScreen() {
         LED.write(1);
         Pixl.setLCDPower(true);
 
-        require("ui").openRootScreen(homeScreen, function() {
+        exports.rootScreenLoop = require("ui").openRootScreen(homeScreen, function() {
             rootScreenIsOpen = false;
 
             require("display").clear();
@@ -89,4 +98,6 @@ exports.start = function() {
     setWatch(startRootScreen, BTN2, {repeat: true, edge: "falling"});
     setWatch(startRootScreen, BTN4, {repeat: true, edge: "falling"});
     setWatch(startRootScreen, BTN3, {repeat: true, edge: "falling"});
+
+    startRootScreen();
 };

@@ -19,6 +19,7 @@ exports.HomeScreen = class extends uiScreen {
         this.items = items;
         this.selectedPageItem = 0;
         this.page = 0;
+        this.closedModule = null;
     }
 
     tick(event) {
@@ -35,7 +36,11 @@ exports.HomeScreen = class extends uiScreen {
 
         if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
             if (this.items[(this.page * 4) + this.selectedPageItem].action != undefined) {
+                this.closedModule = this.items[(this.page * 4) + this.selectedPageItem].module;
+
                 this.items[(this.page * 4) + this.selectedPageItem].action();
+
+                return;
             }
         }
 
@@ -118,5 +123,11 @@ exports.HomeScreen = class extends uiScreen {
             pageUp: this.page > 0,
             pageDown: this.page + 1 < Math.ceil(this.items.length / 4)
         });
+
+        if (this.closedModule != null) {
+            Modules.removeCached(this.closedModule);
+
+            this.closedModule = null;
+        }
     }
 };

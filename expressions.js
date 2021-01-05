@@ -8,6 +8,13 @@
 */
 
 exports.registeredSymbols = {
+    "\"Y\"": " new Date().getFullYear()",
+    "\"M\"": " new Date().getMonth()+1",
+    "\"d\"": " new Date().getDate()",
+    "\"h\"": " new Date().getHours()",
+    "\"m\"": " new Date().getMinutes()",
+    "\"s\"": " new Date().getSeconds()",
+    "\"u\"": " new Date().getMilliseconds()",
     "[\"multiply\"]": "*",
     "[\"divide\"]": "/",
     "\" mod \"": "%",
@@ -22,7 +29,12 @@ exports.registeredSymbols = {
     "\"pi\"": "Math.PI",
     "\"=\"": "==",
     "\"true\"": " true",
-    "\"false\"": " false"
+    "\"false\"": " false",
+    "\"Btl\"": " BTN1.read()",
+    "\"Btr\"": " BTN2.read()",
+    "\"Bbl\"": " BTN4.read()",
+    "\"Bbr\"": " BTN3.read()",
+    "\"temp\"": " E.getTemperature()"
 };
 
 exports.variables = {};
