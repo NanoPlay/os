@@ -70,7 +70,7 @@ function startRootScreen() {
         require("ui").buttons.bl.statusBuffer = [];
         require("ui").buttons.br.statusBuffer = [];
 
-        LED.write(1);
+        LED.write(require("config").properties.backlight);
         Pixl.setLCDPower(true);
 
         exports.rootScreenLoop = require("ui").openRootScreen(homeScreen, function() {
@@ -86,7 +86,7 @@ function startRootScreen() {
 }
 
 exports.start = function() {
-    NRF.nfcURL("https://subnodal.com");
+    NRF.nfcURL("https://subnodal.com/np");
 
     LED.write(0);
     Pixl.setLCDPower(false);

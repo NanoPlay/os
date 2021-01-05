@@ -1,25 +1,32 @@
 {
-    "name": "English (United Kingdom)",
-    "nameShort": "English",
-    "textDirection": "ltr",
+    "name": "English",
     "strings": {
-        "hello": "Hello, world!",
         "clock": "Clock",
         "compute": "Compute",
         "programming": "Programming",
         "settings": "Settings",
         "resultError0": "Expression error",
         "resultError1": "",
-        "new": "New",
+        "empty1": "Get coding! Go",
+        "empty2": "to (or use NFC):",
         "cmd0": "end",
         "cmd1": "output",
-        "cmd2": "input"
+        "cmd2": "set",
+        "cmd3": "if",
+        "cmd4": "else",
+        "cmd5": "fill",
+        "cmd6": "rect",
+        "cmd7": "ellipse",
+        "cmd8": "line",
+        "cmd9": "NFC set",
+        "about": "About NanoPlay",
+        "language": "Language",
+        "bl_off": "Backlight  Off",
+        "bl_on": "Backlight   On"
     },
     "formats": {
-        "weekdays": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         "am": "AM",
         "pm": "PM"
     }

@@ -35,13 +35,11 @@ exports.getLocaleCode = function() {
 
 exports.formatDate = function(text, date) {
     text = text
-        .replace("%a", exports.locale.formats.weekdaysShort[date.getDay()])
-        .replace("%A", exports.locale.formats.weekdays[date.getDay()])
+        .replace("%a", exports.locale.formats.weekdays[date.getDay()])
         .replace("%w", date.getDay())
         .replace("%d", String(date.getDate()).padStart(2, "0"))
         .replace("%-d", date.getDate())
-        .replace("%b", exports.locale.formats.monthsShort[date.getMonth()])
-        .replace("%B", exports.locale.formats.months[date.getMonth()])
+        .replace("%b", exports.locale.formats.months[date.getMonth()])
         .replace("%m", String(date.getMonth() + 1).padStart(2, "0"))
         .replace("%-m", date.getMonth() + 1)
         .replace("%y", String(date.getFullYear()).substr(-2))
@@ -70,9 +68,7 @@ exports.formatDate = function(text, date) {
     if (arguments[2] != true) {
         text = text
             .replace("%c", exports.formatDate("%a %-d %b %Y %H:%M:%S", date, true))
-            .replace("%C", exports.formatDate("%A %-d %B %Y %H:%M:%S", date, true))
             .replace("%x", exports.formatDate("%a %-d %b %Y", date, true))
-            .replace("%X", exports.formatDate("%A %-d %B %Y", date, true))
             .replace("%e", exports.formatDate("%d/%m/%Y", date, true))
             .replace("%E", exports.formatDate("%H:%M:%S", date, true))
             .replace("%g", exports.formatDate("%H:%M", date, true))
@@ -83,43 +79,7 @@ exports.formatDate = function(text, date) {
 };
 
 exports.translate = function(string) {
-    var formatArguments = arguments[2] || {};
-
-    if (typeof(formatArguments) != "object") {
-        formatArguments = [formatArguments];
-    }
-
-    if (exports.locale.strings[string] != undefined) {
-        var foundTranslation = null;
-
-        if (typeof(exports.locale.strings[string]) == "object") {
-            var rules = exports.locale.strings[string];
-
-            for (var rule in rules) {
-                var originalRule = rule;
-
-                for (var argument in formatArguments) {
-                    rule = rule.replace("{" + argument + "}", "`" + formatArguments[argument] + "`");
-                }
-
-                if (eval(rule)) {
-                    foundTranslation = rules[originalRule];
-                }
-            }
-        } else {
-            foundTranslation = exports.locale.strings[string];
-        }
-
-        if (foundTranslation != null) {
-            for (var argument in formatArguments) {
-                foundTranslation = foundTranslation.replace("{" + argument + "}", formatArguments[argument]);
-            }
-
-            return foundTranslation;
-        }
-    }
-
-    return string;
+    return exports.locale.strings[string];
 };
 
 exports.loadLocale();

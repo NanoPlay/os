@@ -65,3 +65,4 @@ exports.evaluate = function(expression) {
 };
 
 registerVariables("ABCDEF".split(""));
+registerVariable("start");

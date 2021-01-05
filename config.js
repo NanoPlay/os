@@ -9,14 +9,15 @@
 
 exports.properties = {
     language: "en_GB",
+    backlight: true,
     longPressTime: 1,
     runSpeed: 50
-};
-
-exports.save = function() {
-    require("Storage").writeJSON("config.json", exports.properties);
 };
 
 try {
     exports.properties = Object.assign(exports.properties, require("Storage").readJSON("config.json"));
 } catch (e) {}
+
+exports.save = function() {
+    require("Storage").writeJSON("config.json", exports.properties);
+};

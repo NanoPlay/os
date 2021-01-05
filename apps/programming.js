@@ -10,7 +10,6 @@
 const LANG_VERSION = 0;
 
 var uiScreen = require("ui").Screen;
-var uiMenuScreen = require("ui").MenuScreen;
 
 function _(text) {
     return require("l10n").translate(text);
@@ -42,6 +41,8 @@ exports.RuntimeScreen = class extends uiScreen {
 
         this.program = program;
         this.expressionEngine = require("expressions");
+        this.lastCondition = true;
+        this.fillShapes = false;
     }
 
     argument(expression) {
@@ -52,8 +53,24 @@ exports.RuntimeScreen = class extends uiScreen {
         }
     }
 
+    start() {
+        this.expressionEngine.variables["\"start\""] = true;
+    }
+
     step(programSource) {
         for (var i = 0; i < programSource.length; i++) {
+            var x1 = 0;
+            var y1 = 0;
+            var x2 = 0;
+            var y2 = 0;
+
+            if (programSource[i].a.length >= 4) {
+                x1 = this.argument(programSource[i].a[0]);
+                y1 = this.argument(programSource[i].a[1]);
+                x2 = this.argument(programSource[i].a[2]);
+                y2 = this.argument(programSource[i].a[3]);
+            }
+
             switch (programSource[i].c) {
                 case 1: // output
                     require("display").drawChars(String(this.argument(programSource[i].a[0])), this.argument(programSource[i].a[1]), this.argument(programSource[i].a[2]));
@@ -61,6 +78,48 @@ exports.RuntimeScreen = class extends uiScreen {
                     break;
                 case 2: // set
                     this.expressionEngine.variables["\"" + this.argument(programSource[i].a[0]) + "\""] = this.argument(programSource[i].a[1]);
+
+                    break;
+                case 3: // if
+                    this.lastCondition = this.argument(programSource[i].a[0]);
+
+                    if (this.lastCondition) {
+                        this.step(programSource[i].s);
+                    }
+
+                    break;
+                case 4: // else
+                    if (!this.lastCondition) {
+                        this.step(programSource[i].s);
+                    }
+
+                    break;
+                case 5: // fill
+                    this.fillShapes = this.argument(programSource[i].a[0]);
+
+                    break;
+                case 6: // rect
+                    if (this.fillShapes) {
+                        g.fillRect(x1, y1, x2, y2);
+                    } else {
+                        g.drawRect(x1, y1, x2, y2);
+                    }
+
+                    break;
+                case 7: // ellipse
+                    if (this.fillShapes) {
+                        g.fillEllipse(x1, y1, x2, y2);
+                    } else {
+                        g.drawEllipse(x1, y1, x2, y2);
+                    }
+
+                    break;
+                case 8: // line
+                    g.drawLine(x1, y1, x2, y2);
+
+                    break;
+                case 9: // NFC set
+                    NRF.nfcURL(this.argument(programSource[i].a[0]));
 
                     break;
             }
@@ -74,20 +133,22 @@ exports.RuntimeScreen = class extends uiScreen {
             this.program = null;
             this.expressionEngine = null;
 
-            Modules.removeCached("config");
-
             this.close();
 
             return;
         }
 
         this.step(this.program["p"]);
+
+        this.expressionEngine.variables["\"start\""] = false;
     }
 };
 
 exports.ProgrammingScreen = class extends uiScreen {
     constructor() {
         super();
+
+        this.showStatusBar = false;
 
         this.program = {};
         this.filename = null;
@@ -134,6 +195,7 @@ exports.ProgrammingScreen = class extends uiScreen {
         }
 
         if (this.filename == null) {
+            let uiMenuScreen = require("ui").MenuScreen;
             let menuScreen = new uiMenuScreen([]);
             let storageList = require("Storage").list();
 
@@ -155,13 +217,19 @@ exports.ProgrammingScreen = class extends uiScreen {
 
             this.menuScreenWasOpen = true;
 
-            this.open(menuScreen);
+            if (menuScreen.menuItems.length > 0) {
+                this.open(menuScreen);
+            } else {
+                let noPrograms = require("noprog").NoProgramsScreen;
+
+                this.open(new noPrograms());
+            }
         } else {
             if (this.program["v"] == undefined) {
                 this.openProgram(this.filename);
             }
 
-            let sourceMap = getSourceMap(this.program["p"]);
+            var sourceMap = getSourceMap(this.program["p"]);
 
             require("ui").drawButtonIcons("back", "play", "up", "down");
 
@@ -217,6 +285,11 @@ exports.ProgrammingScreen = class extends uiScreen {
             }
 
             require("ui").drawButtonIcons(" ", "play", " ", "down");
+
+            require("ui").drawStatusBar({
+                pageUp: this.scrollPosition,
+                pageDown: this.scrollPosition < sourceMap.length - 4
+            });
         }
     }
 };

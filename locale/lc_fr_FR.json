@@ -1,0 +1,33 @@
+{
+    "name": "Francais",
+    "strings": {
+        "clock": "Horloge",
+        "compute": "Calculer",
+        "programming": "Programmer",
+        "settings": "Reglages",
+        "resultError0": "Erreur",
+        "resultError1": "d'expression",
+        "empty1": "Ecrivez le code!",
+        "empty2": "Visite (ou NFC):",
+        "cmd0": "fin",
+        "cmd1": "ecrire",
+        "cmd2": "mettre",
+        "cmd3": "si",
+        "cmd4": "sinon",
+        "cmd5": "remplir",
+        "cmd6": "rect",
+        "cmd7": "ellipse",
+        "cmd8": "ligne",
+        "cmd9": "Definir NFC",
+        "about": "A propos",
+        "language": "Langue",
+        "bl_off": "Lumiere Eteint",
+        "bl_on": "Lumiere Allume"
+    },
+    "formats": {
+        "weekdays": ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
+        "months": ["jan", "fev", "mar", "avr", "mai", "jun", "jul", "aou", "sep", "oct", "nov", "dec"],
+        "am": "AM",
+        "pm": "PM"
+    }
+}

@@ -95,6 +95,12 @@ exports.computeIcons["en_GB"] = {
     buffer: atob("AAAAAAAAAAAAAAAAAAAAAH/////+IAAAH/9JAAAIADKggBJAzKq2VqkLKqlVLuTJGWMqk7IAEAIADIAAAH/9H/////+AAAAAAAA=")
 }
 
+exports.computeIcons["fr_FR"] = {
+    width: 42,
+    height: 14,
+    buffer: atob("AAAAAAAAAAAAAAAAAAAAAH/////+IAAAH/9LAEAIADKMwzJAzLRFHqkLKRFELuTLNFDKk7IAAAIADIAAAH/9H/////+AAAAAAAA=")
+};
+
 exports.programmingIcon = {
     width: 33,
     height: 17,

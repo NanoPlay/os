@@ -78,4 +78,4 @@ exports.ComputeScreen = class extends uiExpressionScreen {
 addExpressionSymbols("0123456789.+-".split(""));
 addExpressionSymbols([["multiply"], ["divide"], "(", ")", " mod ", "\""]);
 addExpressionSymbols(" ABCDEFYMdhmsu".split(""));
-addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi", "=", "!=", "<", ">", "true", "false", "Btl", "Btr", "Bbl", "Bbr", "temp"]);
+addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi", "=", "!=", "<", ">", "true", "false", "temp"]);

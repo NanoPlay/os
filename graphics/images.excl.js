@@ -171,6 +171,22 @@ exports.computeIcons["en_GB"] = Graphics.createImage(`
    ######################################
 `);
 
+exports.computeIcons["fr_FR"] = Graphics.createImage(`
+
+
+
+   ######################################
+  #                        ############# #
+  # ##         #          #             ##
+  # #   ##  ##    ##  ##  #  #      ##  ##
+  # ## #   #   # #   #### # # #  #    # ##
+  # #  #   #   # #   #    # ### ###  #  ##
+  # ##  ## #   # #    ##  # # #  #  ### ##
+  #                       #             ##
+  #                        ############# #
+   ######################################
+`);
+
 exports.programmingIcon = Graphics.createImage(`
 
 

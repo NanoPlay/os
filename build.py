@@ -28,7 +28,7 @@ pathlib.Path("build").mkdir(parents = True, exist_ok = True)
 for path, directories, files in os.walk("."):
     for file in files:
         if file == "boot.js":
-            minify(os.path.join(path, file), os.path.join("build", ".bootcde"))
+            minify(os.path.join(path, file), os.path.join("build", ".bootrst"))
         elif file.endswith(".js") and not file.endswith(".excl.js"):
             if file.endswith(".keep.js"):
                 copy(os.path.join(path, file), os.path.join("build", file.split(".")[0]))
