@@ -411,6 +411,10 @@ exports.openRootScreen = function(screen) {
         } catch (e) {
             clearInterval(loop);
 
+            setTimeout(function() {
+                reset();
+            });
+
             throw e;
         }
     }, require("config").properties.runSpeed);

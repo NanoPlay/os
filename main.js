@@ -86,10 +86,11 @@ function startRootScreen() {
 }
 
 exports.start = function() {
-    NRF.nfcURL("https://subnodal.com/np");
-
     LED.write(0);
     Pixl.setLCDPower(false);
+
+    setTime(Date.parse("2021-01-01T00:00:00") / 1000);
+    NRF.nfcURL("https://subnodal.com/np");
 
     require("display").clear();
     require("display").render();

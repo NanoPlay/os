@@ -19,7 +19,7 @@ exports.NoProgramsScreen = class extends uiScreen {
             this.close();
         }
 
-        NodeFilter.nfcURL("https://subnodal.com/np");
+        NRF.nfcURL("https://subnodal.com/np");
 
         require("display").drawCharsFromCell(["back"], 0, 0);
         require("display").drawCharsFromCell(_("empty1"), 0, 1);

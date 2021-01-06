@@ -22,7 +22,9 @@
         "about": "About NanoPlay",
         "language": "Language",
         "bl_off": "Backlight  Off",
-        "bl_on": "Backlight   On"
+        "bl_on": "Backlight   On",
+        "setTime": "Set time",
+        "restart": "Restart"
     },
     "formats": {
         "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

@@ -67,52 +67,16 @@ exports.back = {
     buffer: atob("AAAAAQYfGRIE8AA=")
 };
 
-exports.home = {
-    width: 7,
-    height: 11,
-    buffer: atob("AAAAAYefkiR4AA==")
-};
-
-exports.edit = {
-    width: 7,
-    height: 12,
-    buffer: atob("AAAAEGHHn1yRwAA=")
-};
-
 exports.backspace = {
     width: 8,
     height: 11,
     buffer: atob("AAAAAAA+a/drPgA=")
 };
 
-exports.delete = {
-    width: 8,
-    height: 12,
-    buffer: atob("AAAAAAgUfyoqIhwA")
-};
-
 exports.play = {
     width: 6,
     height: 11,
     buffer: atob("AAAAAEGHGEAA")
-};
-
-exports.pause = {
-    width: 7,
-    height: 11,
-    buffer: atob("AAAAAAbNmzZsAA==")
-};
-
-exports.stop = {
-    width: 7,
-    height: 11,
-    buffer: atob("AAAAAAfPnz58AA==")
-};
-
-exports.restart = {
-    width: 7,
-    height: 11,
-    buffer: atob("AAAAAAOIuSIYAA==")
 };
 
 exports.sleep = {

@@ -22,7 +22,9 @@
         "about": "A propos",
         "language": "Langue",
         "bl_off": "Lumiere Eteint",
-        "bl_on": "Lumiere Allume"
+        "bl_on": "Lumiere Allume",
+        "setTime": "Regler temps",
+        "restart": "Redemarrer"
     },
     "formats": {
         "weekdays": ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
