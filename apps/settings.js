@@ -77,6 +77,12 @@ exports.load = function(parentScreen) {
         }
     ]);
 
+    menu.close = function() {
+        uiMenu.prototype.close.call(menu);
+
+        menu.menuItems = [];
+    };
+
     LED.write(require("config").properties.backlight);
     
     parentScreen.open(menu);
