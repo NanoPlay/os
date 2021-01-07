@@ -27,7 +27,7 @@ class ComputeResultScreen extends uiScreen {
     }
 
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 
@@ -39,7 +39,7 @@ class ComputeResultScreen extends uiScreen {
 
 class ComputeErrorScreen extends uiScreen {
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 
@@ -78,4 +78,4 @@ exports.ComputeScreen = class extends uiExpressionScreen {
 addExpressionSymbols("0123456789.+-".split(""));
 addExpressionSymbols([["multiply"], ["divide"], "(", ")", " mod ", "\""]);
 addExpressionSymbols(" ABCDEFYMdhmsu".split(""));
-addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi", "=", "!=", "<", ">", "true", "false", "temp"]);
+addExpressionSymbols(["sin(", "cos(", "tan(", "sin-1(", "cos-1(", "tan-1(", "log(", "ln(", "pi", "=", "!=", "&", "|", "not ", "<", ">", "true", "false", "temp"]);

@@ -165,19 +165,19 @@ exports.MenuScreen = class extends screenClass {
     }
 
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 
-        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tr == 1) {
             if (this.menuItems[this.selectedItem].action != undefined) {
                 this.menuItems[this.selectedItem].action();
             }
         }
 
-        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.bl == 1) {
             this.selectedItem--;
-        } else if (event.buttons.bl == require("ui").buttonStatus.LONG_PRESSED) {
+        } else if (event.buttons.bl == 2) {
             this.selectedItem -= 4;
             this.scrollPosition -= 4;
         }
@@ -186,9 +186,9 @@ exports.MenuScreen = class extends screenClass {
             this.selectedItem = this.menuItems.length - 1;
         }
 
-        if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.br == 1) {
             this.selectedItem++;
-        } else if (event.buttons.br == require("ui").buttonStatus.LONG_PRESSED) {
+        } else if (event.buttons.br == 2) {
             this.selectedItem += 4;
             this.scrollPosition += 4;
         }

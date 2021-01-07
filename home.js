@@ -30,11 +30,11 @@ exports.HomeScreen = class extends uiScreen {
             [65, 31]
         ];
 
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 
-        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tr == 1) {
             if (this.items[(this.page * 4) + this.selectedPageItem].action != undefined) {
                 this.closedModule = this.items[(this.page * 4) + this.selectedPageItem].module;
 
@@ -44,7 +44,7 @@ exports.HomeScreen = class extends uiScreen {
             }
         }
 
-        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.bl == 1) {
             this.selectedPageItem--;
         }
 
@@ -53,7 +53,7 @@ exports.HomeScreen = class extends uiScreen {
             this.page--;
         }
 
-        if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.br == 1) {
             this.selectedPageItem++;
         }
 

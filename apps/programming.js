@@ -54,6 +54,8 @@ exports.RuntimeScreen = class extends uiScreen {
     }
 
     start() {
+        Modules.removeCached("images");
+
         this.expressionEngine.variables["\"start\""] = true;
     }
 
@@ -157,34 +159,42 @@ exports.ProgrammingScreen = class extends uiScreen {
         this.scrollPosition = 0;
     }
 
+    start() {
+        Modules.removeCached("home");
+    }
+
     openProgram(filename) {
         this.program = require("Storage").readJSON(filename, true) || {p: [], v: LANG_VERSION};
         this.filename = filename;
+
+        Modules.removeCached("Storage");
     }
 
     tick(event) {
         var thisScope = this;
 
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             if (this.filename != null) {
                 this.filename = null;
                 this.menuScreenWasOpen = false;
             }
         }
 
-        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tr == 1) {
             var runtimeScreen = exports.RuntimeScreen;
             
             this.open(new runtimeScreen(this.program));
 
             this.program = {};
+
+            return;
         }
 
-        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.bl == 1) {
             this.scrollPosition--;
         }
 
-        if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.br == 1) {
             this.scrollPosition++;
         }
 

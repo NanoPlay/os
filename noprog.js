@@ -15,7 +15,7 @@ function _(text) {
 
 exports.NoProgramsScreen = class extends uiScreen {
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 

@@ -16,7 +16,7 @@ function _(text) {
 
 class AboutScreen extends uiScreen {
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             this.close();
         }
 
@@ -38,7 +38,7 @@ class SetTimeScreen extends uiScreen {
     }
 
     tick(event) {
-        if (event.buttons.tl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tl == 1) {
             do {
                 this.currentDigit--;
             } while (this.currentDigit >= 0 && ["/", " ", ":"].includes(this.digitString[this.currentDigit]))
@@ -48,11 +48,11 @@ class SetTimeScreen extends uiScreen {
 
                 return;
             }
-        } else if (event.buttons.tl == require("ui").buttonStatus.LONG_PRESSED) {
+        } else if (event.buttons.tl == 2) {
             this.close();
         }
 
-        if (event.buttons.tr == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.tr == 1) {
             do {
                 this.currentDigit++;
             } while (["/", " ", ":"].includes(this.digitString[this.currentDigit]))
@@ -73,14 +73,14 @@ class SetTimeScreen extends uiScreen {
 
         var newDigit = this.digitString[this.currentDigit];
 
-        if (event.buttons.bl == require("ui").buttonStatus.PRESSED) {
+        if (event.buttons.bl == 1) {
             if (newDigit == "0") {
                 newDigit = "9";
             } else {
                 newDigit = String(Number(newDigit) - 1);
             }
 
-        } else if (event.buttons.br == require("ui").buttonStatus.PRESSED) {
+        } else if (event.buttons.br == 1) {
             if (newDigit == "9") {
                 newDigit = "0";
             } else {
