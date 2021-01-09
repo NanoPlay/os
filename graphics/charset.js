@@ -7,18 +7,6 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-exports.multiply = {
-    width: 6,
-    height: 11,
-    buffer: atob("AAAAARKEKRAA")
-};
-
-exports.divide = {
-    width: 6,
-    height: 11,
-    buffer: atob("AAAAAEAfAEAA")
-};
-
 exports.ellipsis = {
     width: 6,
     height: 12,
@@ -67,26 +55,8 @@ exports.back = {
     buffer: atob("AAAAAQYfGRIE8AA=")
 };
 
-exports.backspace = {
-    width: 8,
-    height: 11,
-    buffer: atob("AAAAAAA+a/drPgA=")
-};
-
-exports.play = {
-    width: 6,
-    height: 11,
-    buffer: atob("AAAAAEGHGEAA")
-};
-
 exports.sleep = {
     width: 7,
     height: 11,
     buffer: atob("AAAAAMLKFBYYAA==")
-};
-
-exports.indent = {
-    width: 4,
-    height: 14,
-    buffer: atob("MzMzMzMzMw==")
 };

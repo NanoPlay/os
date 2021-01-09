@@ -22,7 +22,7 @@ class AboutScreen extends uiScreen {
 
         g.drawImage(require("images").logo, 34, 13);
 
-        require("display").drawCharsFromCell("V0.1.0", 0, 3);
+        require("display").drawCharsFromCell("V0.2.0", 0, 3);
         require("display").drawCharsFromCell("(C) {sn}", 8, 3);
 
         require("ui").drawButtonIcons("back", " ", " ", " ");

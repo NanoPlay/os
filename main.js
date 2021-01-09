@@ -36,26 +36,6 @@ function startRootScreen() {
                 }
             },
             {
-                text: _("compute"),
-                icon: require("images").computeIcons[require("l10n").getLocaleCode()],
-                module: "compute",
-                action: function() {
-                    let screenClass = require("compute").ComputeScreen;
-                    
-                    homeScreen.open(new screenClass());
-                }
-            },
-            {
-                text: _("programming"),
-                icon: require("images").programmingIcon,
-                module: "programming",
-                action: function() {
-                    let programmingClass = require("programming").ProgrammingScreen;
-
-                    homeScreen.open(new programmingClass());
-                }
-            },
-            {
                 text: _("settings"),
                 icon: require("images").settingsIcon,
                 module: "settings",

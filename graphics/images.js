@@ -87,26 +87,6 @@ exports.clockIcon = {
     buffer: atob("AAAAAAAAPgAAAwYAABCEAACCCAACCCAAECBAAECBAAECBAAEBhAAEAZAACACAACACAABAEAAAwYAAAPgAAAAAA==")
 };
 
-exports.computeIcons = {};
-
-exports.computeIcons["en_GB"] = {
-    width: 42,
-    height: 14,
-    buffer: atob("AAAAAAAAAAAAAAAAAAAAAH/////+IAAAH/9JAAAIADKggBJAzKq2VqkLKqlVLuTJGWMqk7IAEAIADIAAAH/9H/////+AAAAAAAA=")
-}
-
-exports.computeIcons["fr_FR"] = {
-    width: 42,
-    height: 14,
-    buffer: atob("AAAAAAAAAAAAAAAAAAAAAH/////+IAAAH/9LAEAIADKMwzJAzLRFHqkLKRFELuTLNFDKk7IAAAIADIAAAH/9H/////+AAAAAAAA=")
-};
-
-exports.programmingIcon = {
-    width: 33,
-    height: 17,
-    buffer: atob("AAAAAAAAAAAH//AABECEAAKtWgABECEAAP//AABAAAAAJ////xQEECBK2qrWpQEECBJ////xAAAAAPAAAABEAAAAAAAAAAA=")
-};
-
 exports.settingsIcon = {
     width: 35,
     height: 17,
