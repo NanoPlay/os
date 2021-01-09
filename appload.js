@@ -112,8 +112,8 @@ exports.getHomeScreenIcons = function(homeScreen) {
             }
 
             iconData.push({
-                text: manifest["name"][require("l10n").getLocaleCode()],
-                icon: manifest["icon"] || require("images").defaultIcon,
+                text: manifest["name"][require("l10n").getLocaleCode()] || apps[i].split(".")[0],
+                icon: typeof(manifest["icon"]) == "string" ? {width: 44, height: 17, buffer: atob(manifest["icon"])} : require("images").defaultIcon,
                 action: function() {
                     try {
                         homeScreen.open(new AppScreen(require("Storage").read(apps[i])));
