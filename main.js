@@ -45,6 +45,8 @@ function startRootScreen() {
             }
         ]);
 
+        homeScreen.items = homeScreen.items.concat(require("appload").getHomeScreenIcons(homeScreen));
+
         require("ui").buttons.tl.statusBuffer = [];
         require("ui").buttons.tr.statusBuffer = [];
         require("ui").buttons.bl.statusBuffer = [];

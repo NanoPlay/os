@@ -92,3 +92,9 @@ exports.settingsIcon = {
     height: 17,
     buffer: atob("AAAAAAAAAAQAAADhSAAAI6qAAAjPkAABJwwAACWssAAEZkkAAICFwAAoMKAACvknAAKkmZAAqLhsACoJ9AAKgEpAAqAGMAAAAAAA")
 };
+
+exports.defaultIcon = {
+    width: 35,
+    height: 17,
+    buffer: atob("AAAAAAAH///4Af///YA////wBAAAAgC/98BAEAAACAL3fuEAQAAAIAv3vAQBAAAAgC33/BAEAAACAL99/EAQAAAIAf///gAAAAAA")
+};

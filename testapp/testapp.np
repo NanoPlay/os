@@ -1,0 +1,10 @@
+function loop() {
+    rect(10, 10, 10, 10);
+    circle(50, 20, 10);
+    text(20, 30, "Hello, world!");
+    text(20, 40, bl.pressed());
+
+    if (br.pressed()) {
+        close();
+    }
+}
