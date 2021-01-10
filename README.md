@@ -4,6 +4,7 @@
 </p>
 <h1 align="center">NanoPlay OS</h1>
 <p align="center">NanoPlay OS, the operating system and firmware that runs on the NanoPlay device.</p>
+<p align="center"><a href="https://nanoplay.subnodal.com">nanoplay.subnodal.com</a></p>
 
 ## About NanoPlay OS
 NanoPlay OS is a small operating system written entirely in JavaScript which
@@ -26,3 +27,16 @@ The NanoPlay API allows apps to:
   or Kelvin
 * Get the locale code of the chosen language to allow for multilingual
   interactivity
+
+## Building
+To build NanoPlay OS, run the `build.py` file. Once building is complete, upload
+the files in `build/` to your NanoPlay using the Espruino Web IDE. Don't forget
+to upload the `.bootrst` file (which may be hidden in your file manager) since
+this ensures that the OS runs at startup.
+
+## Contributing
+Contributions to NanoPlay OS are very much welcome! You may want to search for
+issues tagged with **[good first issue](https://github.com/NanoPlay/os/labels/good%20first%20issue)**
+since resolving those issues will help you learn how to write code for NanoPlay
+OS. If you fork the repo (since you won't be able to make changes to the main
+NanoPlay repo), you can then submit a pull request for us to review.
