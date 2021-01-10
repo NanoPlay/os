@@ -42,25 +42,57 @@ exports._communicators += ";var statusBar=" + (function(enable) {
     _showStatusBar = !!enable;
 }).toString();
 
+/*
+    Clear the screen.
+*/
 exports.clear = function() {
     g.clear();
 };
 
+/*
+    Enable/disable the filling in of subsequent shapes. If disabled, only shape
+    outlines are drawn.
+
+    @param enable {Boolean = false} Whether to fill in subsequent shapes
+*/
 exports.fill = function(enable) {
     exports.fillShapes = !!enable;
 };
 
+/*
+    Enable/disable the inversion of subequent graphics. If enabled, filled-in
+    shapes will appear as off whereas they would appear as on when inversion is
+    disabled.
+
+    @param enable {Boolean = false} Whether to invert subsequent graphics
+*/
 exports.invert = function(enable) {
     g.setBgColor(enable & 1);
     g.setColor((!enable) & 1);
 };
 
+/*
+    Draw a line from one coordinate to another.
+
+    @param x1 {Number} The X component of the first coordinate
+    @param y1 {Number} The Y component of the first coordinate
+    @param x2 {Number} The X component of the second coordinate
+    @param y2 {Number} The Y component of the second coordinate
+*/
 exports.line = function(x1, y1, x2, y2) {
     typeAll(arguments, "number");
 
     g.drawLine(x1, y1, x2, y2);
 };
 
+/*
+    Draw a rectangle from a given coordinate.
+
+    @param x {Number} The X component of the origin coordinate
+    @param y {Number} The Y component of the origin coordinate
+    @param w {Number} The width of the rectangle
+    @param h {Number} The height of the rectangle
+*/
 exports.rect = function(x, y, w, h) {
     typeAll(arguments, "number");
 
@@ -71,6 +103,13 @@ exports.rect = function(x, y, w, h) {
     }
 };
 
+/*
+    Draw a circle around a given coordinate with a specified radius.
+
+    @param x {Number} The X component of the origin coordinate
+    @param y {Number} The Y component of the origin coordinate
+    @param radius {Number} The radius of the circle
+*/
 exports.circle = function(x, y, radius) {
     typeAll(arguments, "number");
 
@@ -81,6 +120,14 @@ exports.circle = function(x, y, radius) {
     }
 };
 
+/*
+    Draw an ellipse from a given coordinate.
+
+    @param x {Number} The X component of the origin coordinate
+    @param y {Number} The Y component of the origin coordinate
+    @param w {Number} The width of the ellipse
+    @param h {Number} The height of the ellipse
+*/
 exports.ellipse = function(x, y, w, h) {
     typeAll(arguments, "number");
 
@@ -91,6 +138,14 @@ exports.ellipse = function(x, y, w, h) {
     }
 };
 
+/*
+    Draw a string of text from a given coordinate.
+
+    @param x {Number} The X component of the origin coordinate
+    @param y {Number} The Y component of the origin coordinate
+    @param text {*} The string to be drawn as text
+    @param mini {Boolean = false} Whether to draw the text in a smaller font
+*/
 exports.text = function(x, y, text) {
     var mini = arguments[3] || false;
 
@@ -105,6 +160,14 @@ exports.text = function(x, y, text) {
     g.drawString(String(text), x, y);
 };
 
+/*
+    Calculate the width of a given string of text
+
+    @param text {*} The string to calculate the textual width of
+    @param mini {Boolean = false} Whether the text is set in a smaller font
+    
+    @returns {Number} The width of the text in pixels
+*/
 exports.getTextWidth = function(text) {
     var mini = arguments[1] || false;
     
@@ -117,12 +180,27 @@ exports.getTextWidth = function(text) {
     return g.stringWidth(String(text));
 };
 
+/*
+    Get a specified pixel's value.
+
+    @param x {Number} The X component of the pixel's coordinate
+    @param y {Number} The Y component of the pixel's coordinate
+
+    @returns {Boolean} Whether the pixel is on or off
+*/
 exports.getPixel = function(x, y) {
     typeAll(arguments, "number");
 
     return !!g.getPixel(x, y);
 };
 
+/*
+    Set a specified pixel's value.
+
+    @param x {Number} The X component of the pixel's coordinate
+    @param y {Number} The Y component of the pixel's coordinate
+    @param on {Boolean = true} Whether the pixel is on or off
+*/
 exports.setPixel = function(x, y) {
     var on = arguments[2] || true;
 
@@ -132,35 +210,68 @@ exports.setPixel = function(x, y) {
 };
 
 exports.tl = {
+    /*
+        Whether the top-left button is pressed.
+
+        @returns {Boolean} Whether the button is pressed
+    */
     pressed: function() {
         return BTN1.read();
     }
 };
 
 exports.tr = {
+    /*
+        Whether the top-right button is pressed.
+
+        @returns {Boolean} Whether the button is pressed
+    */
     pressed: function() {
         return BTN2.read();
     }
 };
 
 exports.bl = {
+    /*
+        Whether the bottom-left button is pressed.
+
+        @returns {Boolean} Whether the button is pressed
+    */
     pressed: function() {
         return BTN4.read();
     }
 };
 
 exports.br = {
+    /*
+        Whether the bottom-right button is pressed.
+
+        @returns {Boolean} Whether the button is pressed
+    */
     pressed: function() {
         return BTN3.read();
     }
 };
 
+/*
+    Read an analog pin's value (on the back of the NanoPlay).
+
+    @param pin {Number} Index of the pin: an integer within the bounds 0 to 5 inclusive
+
+    @returns {Number} The analog value of the pin: a real number within the bounds 0 to 1 inclusive
+*/
 exports.readPin = function(pin) {
     typePin(pin);
     
     return analogRead(PIN_REFERENCES[pin]);
 };
 
+/*
+    Write an analog pin's value (on the back of the NanoPlay).
+
+    @param pin {Number} Index of the pin: an integer within the bounds 0 to 5 inclusive
+    @param value {Number} The The analog value of the pin: a real number within the bounds 0 to 1 inclusive
+*/
 exports.writePin = function(pin, value) {
     typePin(pin);
 
@@ -173,6 +284,13 @@ exports.writePin = function(pin, value) {
     analogWrite(PIN_REFERENCES[pin], value);
 };
 
+/*
+    Read a data file from the NanoPlay's storage.
+
+    @param filename {String} The filename to read from: a string with only characters a-z, A-Z and 0-9, between 1 to 20 characters long
+
+    @returns {String} The contents of the data file that have been read
+*/
 exports.readFile = function(filename) {
     typeAll([filename], "string");
 
@@ -187,6 +305,13 @@ exports.readFile = function(filename) {
     return require("Storage").read(filename + ".npd");
 };
 
+/*
+    Write a data file to the NanoPlay's storage. Any data files with the same
+    name will be overwritten.
+
+    @param filename {String} The filename to write to: a string with only characters a-z, A-Z and 0-9, between 1 to 20 characters long
+    @param data {String} The contents of the data file to write
+*/
 exports.writeFile = function(filename, data) {
     typeAll([filename], "string");
 
@@ -205,6 +330,11 @@ exports.writeFile = function(filename, data) {
     return require("Storage").write(filename + ".npd", String(data));
 };
 
+/*
+    Get a list of data files in the NanoPlay's storage.
+
+    @returns {Object} A list of filenames of data files
+*/
 exports.getFileList = function() {
     return require("Storage").list()
         .filter((a) => a.endsWith(".npd"))
@@ -212,28 +342,59 @@ exports.getFileList = function() {
     ;
 };
 
+/*
+    Set the NanoPlay's NFC chip to emit the specified URL to nearby devices.
+
+    @param url {String} The URL to emit to nearby devices
+*/
 exports.nfcSet = function(url) {
     typeAll([url], "string");
     
     NRF.nfcURL(url);
 };
 
+/*
+    Get the battery's fullness percentage.
+
+    @returns {Number} The percentage fullness of the battery: a number within the bounds of 0 to 100 inclusive
+*/
 exports.getBatteryPercentage = function() {
     return E.getBattery();
 };
 
+/*
+    Get the current measured temperature in degrees Celsius.
+
+    @returns {Number} The temperature in degrees Celsius
+*/
 exports.getTemperatureCelsius = function() {
     return E.getTemperature();
 };
 
+/*
+    Get the current measured temperature in degrees Fahrenheit.
+
+    @returns {Number} The temperature in degrees Fahrenheit
+*/
 exports.getTemperatureFahrenheit = function() {
     return (exports.getTemperatureCelsius() * 1.8) + 32;
 };
 
+/*
+    Get the current measured temperature in Kelvin.
+
+    @returns {Number} The temperature in Kelvin
+*/
 exports.getTemperatureKelvin = function() {
     return exports.getTemperatureCelsius() + 273.15;
 };
 
+/*
+    Get the NanoPlay's current locale code. For example, for English (United
+    Kingdom), the locale code would be `"en_GB"`.
+
+    @returns {String} The locale code of the currently-set locale
+*/
 exports.getLocaleCode = function() {
     return require("l10n").getLocaleCode();
 };
