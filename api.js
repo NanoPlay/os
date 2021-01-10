@@ -105,6 +105,18 @@ exports.text = function(x, y, text) {
     g.drawString(String(text), x, y);
 };
 
+exports.getTextWidth = function(text) {
+    var mini = arguments[1] || false;
+    
+    if (mini) {
+        g.setFont("4x6");
+    } else {
+        g.setFont("6x8");
+    }
+
+    return g.stringWidth(String(text));
+};
+
 exports.getPixel = function(x, y) {
     typeAll(arguments, "number");
 
