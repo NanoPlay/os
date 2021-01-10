@@ -1,9 +1,9 @@
-<div style="text-align: center;">
-    <img style="width: 30%;" src="docs/logo.png" alt="NanoPlay" /><br>
-    <img style="width: 70%;" src="docs/demo.png" alt="Demonstration image of the NanoPlay" />
-</div>
-<h1 style="text-align: center;">NanoPlay OS</h1>
-<p style="text-align: center;">NanoPlay OS, the operating system and firmware that runs on the NanoPlay device.</p>
+<p align="center">
+    <img width="30%" src="docs/logo.png" alt="NanoPlay" /><br>
+    <img width="70%" src="docs/demo.png" alt="Demonstration image of the NanoPlay" />
+</p>
+<h1 align="center">NanoPlay OS</h1>
+<p align="center">NanoPlay OS, the operating system and firmware that runs on the NanoPlay device.</p>
 
 ## About NanoPlay OS
 NanoPlay OS is a small operating system written entirely in JavaScript which
