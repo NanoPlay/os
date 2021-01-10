@@ -96,4 +96,5 @@ representation of a 44x17 raw binary matrix.
 ### Uploading apps to the NanoPlay
 As of the time of writing, the NanoPlay doesn't have an IDE, and so the Espruino
 Web IDE must be used to upload app files to the NanoPlay instead. We plan to
-automatically generate the manifest file in our own IDE.
+automatically generate the manifest file in our own IDE, as well as minify the
+app code.
