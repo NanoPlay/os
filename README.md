@@ -36,7 +36,64 @@ this ensures that the OS runs at startup.
 
 ## Contributing
 Contributions to NanoPlay OS are very much welcome! You may want to search for
-issues tagged with **[good first issue](https://github.com/NanoPlay/os/labels/good%20first%20issue)**
+issues tagged with
+**[good first issue](https://github.com/NanoPlay/os/labels/good%20first%20issue)**
 since resolving those issues will help you learn how to write code for NanoPlay
 OS. If you fork the repo (since you won't be able to make changes to the main
 NanoPlay repo), you can then submit a pull request for us to review.
+
+## Writing apps
+If you know how to write JavaScript, then you'll find making apps for NanoPlay
+easy and intuitive. NanoPlay apps are constructed of two files (which both must
+bear the same filename, disregarding the extension). Your main code will reside
+in a file with the file extension of `.np`, and the app manifst will reside in
+another file with the file extension of `.npm`.
+
+See [the test app](https://github.com/NanoPlay/os/tree/main/testapp) to see an
+example of a NanoPlay app.
+
+In the `.np` app, JavaScript code that resides in a function called `start` will
+run once when your app is opened. Code that resides in a function called `loop`
+will run continuously (for every frame) until your code either makes a call to
+the `close` API command, or if execution is interrupted by holding down all four
+buttons on the NanoPlay.
+
+We suggest that you define your variables outside of the two functions. All
+other code must reside in either of the functions. Defining the functions is
+optional, so if you don't need to run any code at start, then you don't have to
+define the `start` function.
+
+In terms of the manifest (`.npm`) file, it is formatted as a JSON file. A very
+minimal manifest would be:
+
+```json
+{
+    "name": "App Name"
+}
+```
+
+In this example, the same app name will be used no matter what locale is chosen.
+The app's icon will be the default icon which is shown when the `icon` key of
+the JSON file is undefined.
+
+A complete manifest would look like this:
+
+```json
+{
+    "name": {
+        "en_GB": "App Name",
+        "fr_FR": "Nom d'app"
+    },
+    "icon": "AAAAAAAAAA ... AAAAAAAA=="
+}
+```
+
+Here, the name of the app will be chosen depending on the current locale. If the
+current locale doesn't have a matching app name in the manifest, the filename
+(without the extension) will be used instead. Also, the icon is a Base64
+representation of a 44x17 raw binary matrix.
+
+### Uploading apps to the NanoPlay
+As of the time of writing, the NanoPlay doesn't have an IDE, and so the Espruino
+Web IDE must be used to upload app files to the NanoPlay instead. We plan to
+automatically generate the manifest file in our own IDE.
