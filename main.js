@@ -72,6 +72,7 @@ exports.start = function() {
     Pixl.setLCDPower(false);
 
     setTime(Date.parse("2021-01-01T00:00:00") / 1000);
+    NRF.setAdvertising({}, {name: "NanoPlay " + NRF.getAddress().substring(12).replace(":", "")});
     NRF.nfcURL("https://subnodal.com/np");
 
     require("display").clear();
