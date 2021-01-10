@@ -34,12 +34,97 @@ function debounceButtons() {
     require("ui").buttons.br.poll();
 }
 
+class ErrorScreen extends uiScreen {
+    constructor(error) {
+        super();
+
+        this.showStatusBar = false;
+
+        this.errorMessage = error.toString();
+        this.scrollPosition = 0;
+    }
+
+    start() {
+        print("<error type=\"app\">" + this.errorMessage + "</error>");
+    }
+
+    tick(event) {
+        if (event.buttons.tl == 1) {
+            this.close();
+        }
+
+        var unwrappedText = this.errorMessage.split(" ");
+        var wrappedText = [""];
+
+        while (unwrappedText.length > 0) {
+            var nextUnwrap = unwrappedText.shift();
+
+            if (nextUnwrap.length > 14) {
+                nextUnwrap += " ";
+
+                while (nextUnwrap.length > 0) {
+                    wrappedText[wrappedText.length - 1] += nextUnwrap[0];
+
+                    if (wrappedText[wrappedText.length - 1].length >= 14) {
+                        wrappedText.push("");
+                    }
+
+                    nextUnwrap = nextUnwrap.substring(1);
+                }
+
+                continue;
+            }
+
+            if (nextUnwrap.length > 14 - wrappedText[wrappedText.length - 1].length - 1) {
+                wrappedText.push("");
+            }
+
+            wrappedText[wrappedText.length - 1] += nextUnwrap + " ";
+        }
+
+        if (event.buttons.bl == 1) {
+            this.scrollPosition -= 1;
+        } else if (event.buttons.bl == 2) {
+            this.scrollPosition -= 4;
+        }
+
+        if (event.buttons.br == 1) {
+            this.scrollPosition += 1;
+        } else if (event.buttons.br == 2) {
+            this.scrollPosition += 4;
+        }
+
+        if (this.scrollPosition < 0) {
+            this.scrollPosition = wrappedText.length - 4;
+        }
+
+        if (this.scrollPosition > wrappedText.length - 4) {
+            this.scrollPosition = 0;
+        }
+
+        for (var i = 0; i < 4; i++) {
+            if (this.scrollPosition + i < wrappedText.length) {
+                require("display").drawCharsFromCell(wrappedText[this.scrollPosition + i], 1, i);
+            }
+        }
+
+        require("ui").drawButtonIcons("back", " ", "up", "down");
+
+        require("ui").drawStatusBar({
+            pageUp: this.scrollPosition,
+            pageDown: this.scrollPosition + 4 < wrappedText.length
+        });
+    }
+}
+
 class AppScreen extends uiScreen {
     constructor(program) {
         super();
 
         this.showStatusBar = false;
         this.idleRefreshInterval = 100;
+        this.error = null;
+        this.errorShown = false;
 
         var exposedGlobals = {
             Math: Math,
@@ -50,25 +135,33 @@ class AppScreen extends uiScreen {
 
         Object.assign(exposedGlobals, require("api"));
 
-        this.programGlobal = (function() {
-            var __objects = eval(
-                "var global,start,loop,_shouldClose=false,_showStatusBar=false;" +
-                require("api")._communicators +
-                ";" + program +
-                ";var _status=" + STATUS_FUNCTION +
-                ";[start,loop,_status]"
-            );
+        this.programGlobal = {};
 
-            return {
-                start: __objects[0] || function() {},
-                loop: __objects[1] || function() {},
-                _status: __objects[2]
-            };
-        }).call(exposedGlobals);
+        try {
+            this.programGlobal = (function() {
+                var __objects = eval(
+                    "var global,require,start,loop,_shouldClose=false,_showStatusBar=false;" +
+                    require("api")._communicators +
+                    ";" + program +
+                    ";var _status=" + STATUS_FUNCTION +
+                    ";[start,loop,_status]"
+                );
+
+                return {
+                    start: __objects[0] || function() {},
+                    loop: __objects[1] || function() {},
+                    _status: __objects[2] || function() {return {_shouldClose: false, _showStatusBar: false};}
+                };
+            }).call(exposedGlobals);
+        } catch (e) {
+            this.error = e;
+        }
     }
 
     start() {
-        this.programGlobal.start();
+        if (this.programGlobal["start"] != undefined) {
+            this.programGlobal.start();
+        }
     }
 
     tick(event) {
@@ -79,16 +172,34 @@ class AppScreen extends uiScreen {
             return;
         }
 
+        if (this.errorShown) {
+            this.close();
+
+            return;
+        }
+
+        if (this.error != null) {
+            this.open(new ErrorScreen(this.error));
+            
+            this.errorShown = true;
+
+            return;
+        }
+
         this.showStatusBar = this.programGlobal._status()._showStatusBar;
 
-        this.programGlobal.loop(event);
+        try {
+            this.programGlobal.loop(event);
+        } catch (e) {
+            this.error = e;
+        }
 
         if (this.programGlobal._status()._shouldClose) {
             debounceButtons();
             this.close();
         }
     }
-};
+}
 
 exports.getApps = function() {
     return require("Storage").list().filter((a) => a.endsWith(".np"));

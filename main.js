@@ -84,3 +84,7 @@ exports.start = function() {
 
     startRootScreen();
 };
+
+exports.preventOpening = function() {
+    exports.openRootScreenAllowed = false;
+};
