@@ -24,7 +24,9 @@ def copy(a, b):
     outputFile.write(inputCode)
     outputFile.close()
 
-shutil.rmtree("build")
+if os.path.exists("build") and os.path.isdir("build"):
+    shutil.rmtree("build")
+
 pathlib.Path("build").mkdir(parents = True, exist_ok = True)
 
 for path, directories, files in os.walk("."):
