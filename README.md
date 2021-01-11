@@ -31,8 +31,8 @@ The NanoPlay API allows apps to:
 ## Building
 Prerequisites:
 * Python 3
-* Node.js V14
-* terser V5 (`sudo npm install -g terser`)
+* Node.js
+* terser (`sudo npm install -g terser`)
 
 To build NanoPlay OS, run the `build.py` file. Once building is complete, upload
 the files in `build/` to your NanoPlay using the Espruino Web IDE. Don't forget
