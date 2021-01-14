@@ -1,5 +1,5 @@
 /*
-    NanoPlay
+    NanoPlay OS
 
     Copyright (C) Subnodal Technologies. All Rights Reserved.
 
