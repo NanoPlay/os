@@ -8,7 +8,8 @@
         "bl_off": "Backlight  Off",
         "bl_on": "Backlight   On",
         "setTime": "Set time",
-        "restart": "Restart"
+        "restart": "Restart",
+        "uploading": "  Uploading...  "
     },
     "formats": {
         "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

@@ -8,7 +8,8 @@
         "bl_off": "Lumiere Eteint",
         "bl_on": "Lumiere Allume",
         "setTime": "Regler temps",
-        "restart": "Redemarrer"
+        "restart": "Redemarrer",
+        "uploading": " Telechargement "
     },
     "formats": {
         "weekdays": ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],

@@ -7,8 +7,8 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-exports.OS_VERSION = "0.2.1";
-exports.OS_VERNUM = 1;
+exports.OS_VERSION = "0.2.2";
+exports.OS_VERNUM = 2;
 
 exports.properties = {
     language: "en_GB",
