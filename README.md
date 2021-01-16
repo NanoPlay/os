@@ -28,6 +28,10 @@ The NanoPlay API allows apps to:
 * Get the locale code of the chosen language to allow for multilingual
   interactivity
 
+> **Note:** Our own IDE is currently coming soon. We suggest that you code your
+> NanoPlay through the [NanoPlay Web API](https://github.com/NanoPlay/WebAPI) or
+> through the Espruino Web IDE.
+
 ## Building
 Prerequisites:
 * Python 3
@@ -38,6 +42,22 @@ To build NanoPlay OS, run the `build.py` file. Once building is complete, upload
 the files in `build/` to your NanoPlay using the Espruino Web IDE. Don't forget
 to upload the `.bootrst` file (which may be hidden in your file manager) since
 this ensures that the OS runs at startup.
+
+## Distributing
+After building NanoPlay OS, you can generate a distribution file that can be
+used to update existing NanoPlay devices over-the-air. To generate this file,
+run the `dist.py` script. Once distributing is complete, you can use the
+`npupdate.json` file in the `dist/` directory to apply the update.
+
+`npupdate.json` should not be uploaded to the NanoPlay (it won't even fit, so
+good luck getting it on...). The file is intended as an archive that is supplied
+to the [NanoPlay Web API](https://github.com/NanoPlay/WebAPI) for updating the
+NanoPlay file-by-file.
+
+The beauty of this over-the-air update method as compared to the previous update
+method (where one had to manually upload each file through the Espruino Web IDE)
+is that updating is fast and all automatic, and apps and other user data will
+not be erased when updating.
 
 ## Contributing
 Contributions to NanoPlay OS are very much welcome! You may want to search for

@@ -38,5 +38,5 @@ for path, directories, files in os.walk("."):
                 copy(os.path.join(path, file), os.path.join("build", file.split(".")[0]))
             else:
                 minify(os.path.join(path, file), os.path.join("build", file.split(".")[0]))
-        elif file.endswith(".json"):
+        elif file.endswith(".json") and not file == "npupdate.json":
             minify(os.path.join(path, file), os.path.join("build", file), True)

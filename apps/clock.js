@@ -27,7 +27,7 @@ exports.ClockScreen = class extends uiScreen {
 
         g.drawString(time, (128 - g.stringWidth(time)) / 2, 18);
 
-        var date = require("l10n").formatDate("%e", new Date());
+        var date = require("l10n").formatDate("%x", new Date());
 
         require("display").drawChars(date, (128 - (8 * date.length)) / 2, (2 * 14) + 8);
 
