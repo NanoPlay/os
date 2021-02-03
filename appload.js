@@ -46,6 +46,9 @@ class ErrorScreen extends uiScreen {
 
     start() {
         print("<error type=\"app\">" + this.errorMessage + "</error>");
+
+        g.setBgColor(0);
+        g.setColor(1);
     }
 
     tick(event) {
@@ -147,6 +150,8 @@ class AppScreen extends uiScreen {
                     ";[start,loop,_status]"
                 );
 
+                program = "";
+
                 return {
                     start: __objects[0] || function() {},
                     loop: __objects[1] || function() {},
@@ -199,6 +204,12 @@ class AppScreen extends uiScreen {
             this.close();
         }
     }
+
+    close() {
+        Modules.removeCached("api");
+
+        super.close();
+    }
 }
 
 exports.getApps = function() {
@@ -224,10 +235,13 @@ exports.getHomeScreenIcons = function(homeScreen) {
 
             iconData.push({
                 text: manifest["name"][require("l10n").getLocaleCode()] || apps[i].split(".")[0],
-                icon: typeof(manifest["icon"]) == "string" ? {width: 44, height: 17, buffer: atob(manifest["icon"])} : require("images").defaultIcon,
+                icon: typeof(manifest["icon"]) == "string" ? {width: 44, height: 17, buffer: atob(manifest["icon"])} : null,
                 action: function() {
                     try {
                         homeScreen.open(new AppScreen(require("Storage").read(apps[i])));
+
+                        g.setBgColor(0);
+                        g.setColor(1);
                     } catch (e) {
                         print(e);
                     }

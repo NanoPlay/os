@@ -9,6 +9,13 @@
 
 var uiScreen = require("ui").Screen;
 
+const ICON_PLACEMENT = new Uint8Array([
+    17, 10,
+    65, 10,
+    17, 31,
+    65, 31
+]);
+
 exports.HomeScreen = class extends uiScreen {
     constructor(items) {
         super();
@@ -23,13 +30,6 @@ exports.HomeScreen = class extends uiScreen {
     }
 
     tick(event) {
-        var iconPlacement = [
-            [17, 10],
-            [65, 10],
-            [17, 31],
-            [65, 31]
-        ];
-
         if (event.buttons.tl == 1) {
             this.close();
         }
@@ -89,7 +89,7 @@ exports.HomeScreen = class extends uiScreen {
 
                     require("display").drawCharsFromCell(textToShow, 2, 3);
 
-                    g.fillRect(iconPlacement[i][0] + 1, iconPlacement[i][1] + 1, iconPlacement[i][0] + 44, iconPlacement[i][1] + 17);
+                    g.fillRect(ICON_PLACEMENT[i * 2] + 1, ICON_PLACEMENT[i * 2 + 1] + 1, ICON_PLACEMENT[i * 2] + 44, ICON_PLACEMENT[i * 2 + 1] + 17);
 
                     g.setBgColor(1);
                     g.setColor(0);
@@ -98,22 +98,24 @@ exports.HomeScreen = class extends uiScreen {
                     g.setColor(1);
                 }
 
-                if (this.items[(this.page * 4) + i].icon.width <= 44 && this.items[(this.page * 4) + i].icon.height <= 17) {
-                    g.drawImage(this.items[(this.page * 4) + i].icon, iconPlacement[i][0] + 1, iconPlacement[i][1] + 1);
+                var appIcon = this.items[(this.page * 4) + i].icon || require("images").defaultIcon;
+
+                if (appIcon.width <= 44 && appIcon.height <= 17) {
+                    g.drawImage(appIcon, ICON_PLACEMENT[i * 2] + 1, ICON_PLACEMENT[i * 2 + 1] + 1);
                 }
 
                 g.setBgColor(0);
                 g.setColor(1);
 
-                g.drawLine(iconPlacement[i][0] + 2, iconPlacement[i][1], iconPlacement[i][0] + 43, iconPlacement[i][1]);
-                g.drawLine(iconPlacement[i][0] + 2, iconPlacement[i][1] + 18, iconPlacement[i][0] + 43, iconPlacement[i][1] + 18);
-                g.drawLine(iconPlacement[i][0], iconPlacement[i][1] + 2, iconPlacement[i][0], iconPlacement[i][1] + 16);
-                g.drawLine(iconPlacement[i][0] + 45, iconPlacement[i][1] + 2, iconPlacement[i][0] + 45, iconPlacement[i][1] + 16);
+                g.drawLine(ICON_PLACEMENT[i * 2] + 2, ICON_PLACEMENT[i * 2 + 1], ICON_PLACEMENT[i * 2] + 43, ICON_PLACEMENT[i * 2 + 1]);
+                g.drawLine(ICON_PLACEMENT[i * 2] + 2, ICON_PLACEMENT[i * 2 + 1] + 18, ICON_PLACEMENT[i * 2] + 43, ICON_PLACEMENT[i * 2 + 1] + 18);
+                g.drawLine(ICON_PLACEMENT[i * 2], ICON_PLACEMENT[i * 2 + 1] + 2, ICON_PLACEMENT[i * 2], ICON_PLACEMENT[i * 2 + 1] + 16);
+                g.drawLine(ICON_PLACEMENT[i * 2] + 45, ICON_PLACEMENT[i * 2 + 1] + 2, ICON_PLACEMENT[i * 2] + 45, ICON_PLACEMENT[i * 2 + 1] + 16);
 
-                g.setPixel(iconPlacement[i][0] + 1, iconPlacement[i][1] + 1);
-                g.setPixel(iconPlacement[i][0] + 44, iconPlacement[i][1] + 1);
-                g.setPixel(iconPlacement[i][0] + 1, iconPlacement[i][1] + 17);
-                g.setPixel(iconPlacement[i][0] + 44, iconPlacement[i][1] + 17);
+                g.setPixel(ICON_PLACEMENT[i * 2] + 1, ICON_PLACEMENT[i * 2 + 1] + 1);
+                g.setPixel(ICON_PLACEMENT[i * 2] + 44, ICON_PLACEMENT[i * 2 + 1] + 1);
+                g.setPixel(ICON_PLACEMENT[i * 2] + 1, ICON_PLACEMENT[i * 2 + 1] + 17);
+                g.setPixel(ICON_PLACEMENT[i * 2] + 44, ICON_PLACEMENT[i * 2 + 1] + 17);
             }
         }
 

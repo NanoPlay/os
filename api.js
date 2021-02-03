@@ -7,8 +7,6 @@
     Licenced by the Subnodal Open-Source Licence, which can be found at LICENCE.md.
 */
 
-const PIN_REFERENCES = [A0, A1, A2, A3, A4, A5];
-
 exports._communicators = "";
 
 exports.OS_VERSION = require("config").OS_VERSION;
@@ -262,8 +260,8 @@ exports.br = {
 */
 exports.readPin = function(pin) {
     typePin(pin);
-    
-    return analogRead(PIN_REFERENCES[pin]);
+
+    return analogRead(pin + 14); // Analog pins start at 14
 };
 
 /*
@@ -281,7 +279,7 @@ exports.writePin = function(pin, value) {
         throw new TypeError("Value must be a positive real number within the bounds 0 to 1 inclusive");
     }
 
-    analogWrite(PIN_REFERENCES[pin], value);
+    analogWrite(pin + 14, value); // Analog pins start at 14
 };
 
 /*
