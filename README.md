@@ -28,10 +28,6 @@ The NanoPlay API allows apps to:
 * Get the locale code of the chosen language to allow for multilingual
   interactivity
 
-> **Note:** Our own IDE is currently coming soon. We suggest that you code your
-> NanoPlay through the [NanoPlay Web API](https://github.com/NanoPlay/WebAPI) or
-> through the Espruino Web IDE.
-
 ## Building
 Prerequisites:
 * Python 3
@@ -119,7 +115,17 @@ current locale doesn't have a matching app name in the manifest, the filename
 representation of a 44x17 raw binary matrix.
 
 ### Uploading apps to the NanoPlay
-As of the time of writing, the NanoPlay doesn't have an IDE, and so the Espruino
-Web IDE must be used to upload app files to the NanoPlay instead. We plan to
-automatically generate the manifest file in our own IDE, as well as minify the
-app code.
+As a user, you can write code and upload it to your NanoPlay via the
+[NanoPlay IDE](https://nanoplay.subnodal.com/dashboard/editor.html), which is
+a web app that is usable from our website. The IDE uploads apps using Web
+Bluetooth, so a browser that supports this feature is required. A simulator is
+also integrated into the IDE for rapid prototyping, so that you don't have to
+upload your app to your NanoPlay to test small changes.
+
+An added bonus with the IDE is that you don't need to write a manifest ─ it is
+automatically generated for you based on the app settings.
+
+If you're looking to interface the NanoPlay with your very own web app, you can
+use the [NanoPlay Web API](https://github.com/NanoPlay/WebAPI) to control
+various aspects of the NanoPlay. It is the same API that's used in the IDE to
+send the code to the NanoPlay.
