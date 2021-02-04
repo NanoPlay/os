@@ -122,6 +122,8 @@ Bluetooth, so a browser that supports this feature is required. A simulator is
 also integrated into the IDE for rapid prototyping, so that you don't have to
 upload your app to your NanoPlay to test small changes.
 
+![Screenshot of IDE](docs/ide.png)
+
 An added bonus with the IDE is that you don't need to write a manifest ─ it is
 automatically generated for you based on the app settings.
 
