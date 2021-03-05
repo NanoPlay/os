@@ -14,13 +14,6 @@
     NanoPlay API.
 */
 
-const STATUS_FUNCTION = (function() {
-    return {
-        _shouldClose: _shouldClose,
-        _showStatusBar: _showStatusBar
-    };
-}).toString();
-
 var uiScreen = require("ui").Screen;
 
 function debounceButtons() {
@@ -121,7 +114,7 @@ class ErrorScreen extends uiScreen {
 }
 
 class AppScreen extends uiScreen {
-    constructor(program) {
+    constructor(programFile) {
         super();
 
         this.showStatusBar = false;
@@ -140,17 +133,13 @@ class AppScreen extends uiScreen {
 
         this.programGlobal = {};
 
+        var _communicators = require("api")._communicators;
+
         try {
             this.programGlobal = (function() {
-                var __objects = eval(
-                    "var global,require,start,loop,_shouldClose=false,_showStatusBar=false;" +
-                    require("api")._communicators +
-                    ";" + program +
-                    ";var _status=" + STATUS_FUNCTION +
-                    ";[start,loop,_status]"
-                );
+                eval(_communicators);
 
-                program = "";
+                var __objects = eval(require("Storage").read(programFile));
 
                 return {
                     start: __objects[0] || function() {},
@@ -238,7 +227,7 @@ exports.getHomeScreenIcons = function(homeScreen) {
                 icon: typeof(manifest["icon"]) == "string" ? {width: 44, height: 17, buffer: atob(manifest["icon"])} : null,
                 action: function() {
                     try {
-                        homeScreen.open(new AppScreen(require("Storage").read(apps[i])));
+                        homeScreen.open(new AppScreen(apps[i]));
 
                         g.setBgColor(0);
                         g.setColor(1);
