@@ -67,7 +67,7 @@ NanoPlay repo), you can then submit a pull request for us to review.
 If you know how to write JavaScript, then you'll find making apps for NanoPlay
 easy and intuitive. NanoPlay apps are constructed of two files (which both must
 bear the same filename, disregarding the extension). Your main code will reside
-in a file with the file extension of `.np`, and the app manifst will reside in
+in a file with the file extension of `.np`, and the app manifest will reside in
 another file with the file extension of `.npm`.
 
 See [the test app](https://github.com/NanoPlay/os/tree/main/testapp) to see an
