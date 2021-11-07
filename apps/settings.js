@@ -15,6 +15,12 @@ function _(text) {
 }
 
 class AboutScreen extends uiScreen {
+    constructor() {
+        super();
+
+        this.startTime = new Date().getTime();
+    }
+
     tick(event) {
         if (event.buttons.tl == 1) {
             this.close();
@@ -22,8 +28,21 @@ class AboutScreen extends uiScreen {
 
         g.drawImage(require("images").logo, 34, 13);
 
-        require("display").drawCharsFromCell(require("config").OS_VERSION, 0, 3);
-        require("display").drawCharsFromCell("(C) {sn}", 8, 3);
+        var displayToShow = Math.floor(((new Date().getTime() - this.startTime) % 9_000) / 3_000);
+
+        switch (displayToShow) {
+            case 0:
+                require("display").drawCharsFromCell("NanoPlay " + NRF.getAddress().substring(12).replace(":", ""), 0, 3);
+                break;
+
+            case 1:
+                require("display").drawCharsFromCell(_("version_prepend") + require("config").OS_VERSION, 0, 3);
+                break;
+
+            case 2:
+                require("display").drawCharsFromCell("(C) {subnodal}", 0, 3);
+                break;
+        }
 
         require("ui").drawButtonIcons("back", " ", " ", " ");
     }

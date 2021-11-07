@@ -9,6 +9,7 @@
         "bl_on": "Backlight   On",
         "setTime": "Set time",
         "restart": "Restart",
+        "version_prepend": "Version ",
         "uploading": "  Uploading...  "
     },
     "formats": {
