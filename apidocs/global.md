@@ -71,15 +71,15 @@
 
 **Returns:** `Boolean` · Whether the pixel is on or off
 
-## ▶️ `getTemperatireFahrenheit`
-`function` · Get the current measured temperature in degrees Fahrenheit.
-
-**Returns:** `Number` · The temperature in degrees Fahrenheit
-
 ## ▶️ `getTemperatureCelsius`
 `function` · Get the current measured temperature in degrees Celsius.
 
 **Returns:** `Number` · The temperature in degrees Celsius
+
+## ▶️ `getTemperatureFahrenheit`
+`function` · Get the current measured temperature in degrees Fahrenheit.
+
+**Returns:** `Number` · The temperature in degrees Fahrenheit
 
 ## ▶️ `getTemperatureKelvin`
 `function` · Get the current measured temperature in Kelvin.
