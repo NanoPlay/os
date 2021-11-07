@@ -391,7 +391,7 @@ exports.getTemperatureCelsius = function() {
 };
 
 /*
-    @name getTemperatireFahrenheit
+    @name getTemperatureFahrenheit
     Get the current measured temperature in degrees Fahrenheit.
     @returns <Number> The temperature in degrees Fahrenheit
 */
